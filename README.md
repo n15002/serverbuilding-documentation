@@ -98,3 +98,8 @@ https://github.com/cloneko/serverbuilding/blob/master/Section1.md
 [11:08] 
 ホストオンリーアダプタが未選択状態で設定することが出来ない。
 これで解決 http://tyoimemo.blogspot.jp/2012/03/blog-post.html
+
+パソコンに右Ctrlが無いので、環境設定からホストキーを左Ctrl+Shiftに変更する。
+isoを指定して起動順番をディスク＞HDDに変更
+プロセッサーを2CPUに変更して80%使用率制限した
+
