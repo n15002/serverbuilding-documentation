@@ -103,3 +103,14 @@ https://github.com/cloneko/serverbuilding/blob/master/Section1.md
 isoを指定して起動順番をディスク＞HDDに変更
 プロセッサーを2CPUに変更して80%使用率制限した
 
+デフォでインターフェースごとにDHCP書いてあったので、ONBOOTをyesにしてservice network restartで
+ip a でIP確認してからSSHできた
+
+proxy設定
+http://qiita.com/chidakiyo/items/95cbc263f8157cfa5cd7
+
+http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/
+IPv6が邪魔してたので停止させる
+
+su - 
+yum update
