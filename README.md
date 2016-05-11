@@ -114,3 +114,6 @@ IPv6が邪魔してたので停止させる
 
 su - 
 yum update
+
+mysql-server: http://sawara.me/mysql/2094/
+yum install httpd php php-mysql wget
