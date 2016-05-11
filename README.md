@@ -1,12 +1,9 @@
+**5/10 Unix/AWSの作業手順**
+htps://github.com/cloneko/serverbuilding
 
-kyouya [10:53 AM] 
-5/10 Unix/AWSの作業手順
-htps://github.com/cloneko/serverbuilding (edited)
-
-[10:57] 
 virtualboxのインストール
 公式サイト https://www.virtualbox.org/wiki/Linux_Downloads
-AMD64選択 ダウロード (edited)
+AMD64選択 ダウロード
 
 ```
 ~/Downloads ❯❯❯ sudo dpkg -i virtualbox-5.0_5.0.20-106931-Ubuntu-xenial_amd64.deb
@@ -109,8 +106,9 @@ ip a でIP確認してからSSHできた
 proxy設定
 http://qiita.com/chidakiyo/items/95cbc263f8157cfa5cd7
 
-http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/
+
 IPv6が邪魔してたので停止させる
+http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/
 
 su - 
 yum update
@@ -123,10 +121,11 @@ tar zxvf wordpress-4.5.2-ja.tar.gz
 sudo mv ~/wordpress /var/www/html/
 chown -R apache:apache /var/www/html/wordpress/*
 
-SELECT host,user FROM mysql.user;
-mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
-Query OK, 0 rows affected (0.00 sec)
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
+    mysql> SELECT host,user FROM mysql.user;
+    mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
+    Query OK, 0 rows affected (0.00 sec)
+    mysql> 
+	GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
 
 cp wp-config-sample.php wp-config.php
 DB名やユーザ名を書き込む
