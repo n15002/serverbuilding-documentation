@@ -118,6 +118,11 @@ yum update
 mysql-server: http://sawara.me/mysql/2094/
 yum install httpd php php-mysql wget
 
+wget https://ja.wordpress.org/wordpress-4.5.2-ja.tar.gz
+tar zxvf wordpress-4.5.2-ja.tar.gz
+sudo mv ~/wordpress /var/www/html/
+chown -R apache:apache /var/www/html/wordpress/*
+
 SELECT host,user FROM mysql.user;
 mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
 Query OK, 0 rows affected (0.00 sec)
@@ -125,6 +130,13 @@ GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDEN
 
 cp wp-config-sample.php wp-config.php
 DB名やユーザ名を書き込む
+
+UFWつかいたい
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -L
+
+ブラウザかOSの設定でローカルアドレスをプロキシ除外する。192.168.*
 
 phpinfoは見れるがwordpressが500エラー
 phpのエラーログ表示
