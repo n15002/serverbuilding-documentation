@@ -117,3 +117,24 @@ yum update
 
 mysql-server: http://sawara.me/mysql/2094/
 yum install httpd php php-mysql wget
+
+SELECT host,user FROM mysql.user;
+mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
+Query OK, 0 rows affected (0.00 sec)
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
+
+cp wp-config-sample.php wp-config.php
+DB名やユーザ名を書き込む
+
+phpinfoは見れるがwordpressが500エラー
+phpのエラーログ表示
+sudo vi /etc/php.ini 
+display_errors = ←On
+permissionなんとかって書かれてた
+
+SELINUXちね
+sudo vi /etc/selinux/config
+SELINUX=disabled
+か
+sudo setenforce o
+
