@@ -107,8 +107,9 @@ isoを指定して起動順番をディスク＞HDDに変更
 proxy設定  
 http://qiita.com/chidakiyo/items/95cbc263f8157cfa5cd7
 
-IPv6が邪魔してたので停止させる  
-http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/
+~~IPv6が邪魔してたので停止させる  
+http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/~~
+邪魔してなかったけど、とりあえずやっておこう。
 
 rootでyumのアップデートを行い、apacheやphp、またwordpress本体をダウンロードする為にwgetもインストールする。
 ```
@@ -129,11 +130,9 @@ chown -R apache:apache /var/www/html/wordpress/*
 
 rootユーザにパスワードを設定し、wordpress用のユーザを制作、権限を与えてパスワードを設定する。
 ```
-    mysql> SELECT host,user FROM mysql.user;
-    mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
-    Query OK, 0 rows affected (0.00 sec)
-    mysql> 
-	GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
+mysql> SELECT host,user FROM mysql.user;
+mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
+mysql> GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
 ```
 
 cp wp-config-sample.php wp-config.php
@@ -145,18 +144,18 @@ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -L
 ```
+ブラウザかOSの設定でローカルアドレス（192.168.*）をプロキシ除外する。
 
-ブラウザかOSの設定でローカルアドレスをプロキシ除外する。192.168.*
-
-phpinfoは見れるがwordpressが500エラー
-phpのエラーログ表示
+phpinfoは見れるがwordpressが500エラー  
+phpのエラーログを表示して、原因を探る。
+```
 sudo vi /etc/php.ini 
 display_errors = ←On
+```
 permissionなんとかって書かれてた
 
-SELINUXちね
+SELINUXが邪魔してたみたい、停止させておく。
+```
 sudo vi /etc/selinux/config
 SELINUX=disabled
-か
-sudo setenforce o
-
+```
