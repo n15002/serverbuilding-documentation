@@ -1,6 +1,6 @@
 5/10 Unix/AWSの作業手順
 ======
-htps://github.com/cloneko/serverbuilding
+https://github.com/cloneko/serverbuilding
 
 ###virtualboxのインストール
 公式サイト：https://www.virtualbox.org/wiki/Linux_Downloads  
@@ -75,7 +75,7 @@ Oracle VM VirtualBox Manager 5.0.20
 (C) 2005-2016 Oracle Corporation
 All rights reserved.
 ```
-##vagrantのインストール
+###vagrantのインストール
 公式サイト：https://www.vagrantup.com/downloads.html  
 debianの64bit選択してダウンロード  
 
@@ -108,7 +108,7 @@ proxy設定
 http://qiita.com/chidakiyo/items/95cbc263f8157cfa5cd7
 
 ~~IPv6が邪魔してたので停止させる  
-http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/~~
+http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/~~  
 邪魔してなかったけど、とりあえずやっておこう。
 
 rootでyumのアップデートを行い、apacheやphp、またwordpress本体をダウンロードする為にwgetもインストールする。
@@ -159,3 +159,5 @@ SELINUXが邪魔してたみたい、停止させておく。
 sudo vi /etc/selinux/config
 SELINUX=disabled
 ```
+
+
