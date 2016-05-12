@@ -135,10 +135,13 @@ mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
 mysql> GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
 ```
 
+サンプルをコピーして、DB名やユーザ名を書き込む。
+```
 cp wp-config-sample.php wp-config.php
-DB名やユーザ名を書き込む
+vi wp-config.php
+```
 
-iptables使ってポートを開ける
+iptables使って、Webサーバで使うポートを開ける
 ```
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
