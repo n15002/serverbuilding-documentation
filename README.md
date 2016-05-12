@@ -1,10 +1,10 @@
-**5/10 Unix/AWSの作業手順**
+5/10 Unix/AWSの作業手順
+======
 htps://github.com/cloneko/serverbuilding
 
-virtualboxのインストール
-公式サイト https://www.virtualbox.org/wiki/Linux_Downloads
-AMD64選択 ダウロード
-
+###virtualboxのインストール
+公式サイト：https://www.virtualbox.org/wiki/Linux_Downloads  
+AMD64を選択してダウンロード
 ```
 ~/Downloads ❯❯❯ sudo dpkg -i virtualbox-5.0_5.0.20-106931-Ubuntu-xenial_amd64.deb
 [sudo] password for n15001: 
@@ -75,9 +75,9 @@ Oracle VM VirtualBox Manager 5.0.20
 (C) 2005-2016 Oracle Corporation
 All rights reserved.
 ```
-vagrantのインストール
-公式サイト https://www.vagrantup.com/downloads.html
-debian 64bit選択 ダウンロード
+##vagrantのインストール
+公式サイト：https://www.vagrantup.com/downloads.html  
+debianの64bit選択してダウンロード  
 
 ```
 ~/Downloads ❯❯❯ sudo dpkg -i vagrant_1.8.1_x86_64.deb
@@ -90,50 +90,61 @@ Vagrant 1.8.1
 ```
 
 Section 1 基本のサーバー構築
+------
 https://github.com/cloneko/serverbuilding/blob/master/Section1.md
 
-[11:08] 
-ホストオンリーアダプタが未選択状態で設定することが出来ない。
-これで解決 http://tyoimemo.blogspot.jp/2012/03/blog-post.html
+ターミナルでvirtualboxと打つか、ダッシュボードから検索して起動する。
 
-パソコンに右Ctrlが無いので、環境設定からホストキーを左Ctrl+Shiftに変更する。
-isoを指定して起動順番をディスク＞HDDに変更
-プロセッサーを2CPUに変更して80%使用率制限した
+ホストオンリーアダプタが未選択状態で設定することが出来ない。  
+これで解決 http://tyoimemo.blogspot.jp/2012/03/blog-post.html  
 
-デフォでインターフェースごとにDHCP書いてあったので、ONBOOTをyesにしてservice network restartで
-ip a でIP確認してからSSHできた
+パソコンに右Ctrlが無いので、環境設定からホストキーを左Ctrl+Shiftに変更する。  
+isoを指定して起動順番をディスク＞HDDに変更  
+プロセッサーを2CPUに変更して80%使用率制限した  
 
-proxy設定
+デフォでインターフェースごとにDHCP書いてあったので、ONBOOTをyesにしてservice network restartでip a でIP確認してからSSHできた
+
+proxy設定  
 http://qiita.com/chidakiyo/items/95cbc263f8157cfa5cd7
 
-
-IPv6が邪魔してたので停止させる
+IPv6が邪魔してたので停止させる  
 http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/
 
-su - 
+rootでyumのアップデートを行い、apacheやphp、またwordpress本体をダウンロードする為にwgetもインストールする。
+```
+su -
 yum update
-
-mysql-server: http://sawara.me/mysql/2094/
 yum install httpd php php-mysql wget
+```
+標準でmysql-serverインストール出来ないので下を参照。  
+mysql-serverのインストール: http://sawara.me/mysql/2094/  
 
+wordpressをダウンロードし、解凍、apacheの公開ディレクトリに移動させ所有者やグループをapacheへ変更しておく。
+```
 wget https://ja.wordpress.org/wordpress-4.5.2-ja.tar.gz
 tar zxvf wordpress-4.5.2-ja.tar.gz
 sudo mv ~/wordpress /var/www/html/
 chown -R apache:apache /var/www/html/wordpress/*
+```
 
+rootユーザにパスワードを設定し、wordpress用のユーザを制作、権限を与えてパスワードを設定する。
+```
     mysql> SELECT host,user FROM mysql.user;
     mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
     Query OK, 0 rows affected (0.00 sec)
     mysql> 
 	GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
+```
 
 cp wp-config-sample.php wp-config.php
 DB名やユーザ名を書き込む
 
-UFWつかいたい
+iptables使ってポートを開ける
+```
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -L
+```
 
 ブラウザかOSの設定でローカルアドレスをプロキシ除外する。192.168.*
 
