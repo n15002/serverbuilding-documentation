@@ -144,8 +144,10 @@ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -L
 ```
-ブラウザかOSの設定でローカルアドレス（192.168.*）をプロキシ除外する。
+ブラウザかOSの設定でローカルアドレス（192.168.*）をプロキシ除外する。  
+ホストOSのブラウザからCentOSのIPへアクセスして、apacheの画面が表示される事を確認する。
 
+http://CentOSのIP/wordpressへアクセスする。　
 phpinfoは見れるがwordpressが500エラー  
 phpのエラーログを表示して、原因を探る。
 ```
@@ -160,4 +162,8 @@ sudo vi /etc/selinux/config
 SELINUX=disabled
 ```
 
+http://CentOSのIP/wordpress/wp-admin/install.phpへアクセスして、適宜書く。
+![install.phpの画像](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/1.png)
 
+何も問題が無ければインストールが完了し、記事も投稿できるはず。  
+![インストール完了画面](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/2.png)
