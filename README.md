@@ -212,6 +212,9 @@ vagrant@127.0.0.1's password:
 Last login: Wed May 11 10:18:14 2016
 [vagrant@localhost ~]$
 ```
+
+http://www.server-memo.net/memo/wordpress/nginx-install.html
+
 sudo vi /etc/yum.conf
 sudo vi /etc/wgetrc
 
@@ -226,4 +229,50 @@ indexディレクティブを書かないとダメ
 http://stackoverflow.com/questions/27093823/403-forbidden-error-in-nginx-configuration-for-wordpress-site
 2-2はできた
 
+abてすとくそでわ
+```
+~ ❯❯❯ ab -n 100 -c 100 http://192.168.56.129/                                                                          ⏎
+This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+Benchmarking 192.168.56.129 (be patient).....done
+
+Server Software:        nginx/1.6.3
+Server Hostname:        192.168.56.129
+Server Port:            80
+
+Document Path:          /
+Document Length:        11976 bytes
+
+Concurrency Level:      100
+Time taken for tests:   93.164 seconds
+Complete requests:      100
+Failed requests:        55
+   (Connect: 0, Receive: 0, Length: 55, Exceptions: 0)
+Non-2xx responses:      55
+Total transferred:      567665 bytes
+HTML transferred:       548160 bytes
+Requests per second:    1.07 [#/sec] (mean)
+Time per request:       93163.859 [ms] (mean)
+Time per request:       931.639 [ms] (mean, across all concurrent requests)
+Transfer rate:          5.95 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       10   20   6.4     21      29
+Processing: 11563 63666 20085.8  63902   93153
+Waiting:     9217 54076 16046.5  60379   66176
+Total:      11573 63686 20086.8  63929   93163
+
+Percentage of the requests served within a certain time (ms)
+  50%  63929
+  66%  65492
+  75%  81663
+  80%  84156
+  90%  87241
+  95%  88419
+  98%  91191
+  99%  93163
+ 100%  93163 (longest request)
+```
 
