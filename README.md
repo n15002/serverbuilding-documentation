@@ -176,6 +176,9 @@ Stderr: VBoxManage: error: Implementation of the USB 2.0 controller not found!~
 拡張機能をここからダウンロードして追加する
 https://www.virtualbox.org/wiki/Downloads
 
+
+Section 2 その他のWebサーバー環境
+------
 ```
 ~/hoge ❯❯❯  vagrant up                                                                                               ⏎
 Bringing machine 'default' up with 'virtualbox' provider...
