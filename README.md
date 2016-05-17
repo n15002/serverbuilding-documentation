@@ -212,3 +212,18 @@ vagrant@127.0.0.1's password:
 Last login: Wed May 11 10:18:14 2016
 [vagrant@localhost ~]$
 ```
+sudo vi /etc/yum.conf
+sudo vi /etc/wgetrc
+
+systemctl enable mysql
+systemctl restart nginx
+systemctl status nginx
+sudo nginx -t
+sudo vi /etc/nginx/nginx.conf
+
+トップページだけ403になって謎だった
+indexディレクティブを書かないとダメ
+http://stackoverflow.com/questions/27093823/403-forbidden-error-in-nginx-configuration-for-wordpress-site
+2-2はできた
+
+
