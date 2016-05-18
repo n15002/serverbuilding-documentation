@@ -278,4 +278,79 @@ Percentage of the requests served within a certain time (ms)
   99%  93163
  100%  93163 (longest request)
 ```
+2日目にvagrant up したらエラーはいた
+```
+Failed to mount folders in Linux guest. This is usually because
+the "vboxsf" file system is not available. Please verify that
+the guest additions are properly installed in the guest and
+can work properly. The command attempted was:
 
+mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` vagrant /vagrant
+mount -t vboxsf -o uid=`id -u vagrant`,gid=`id -g vagrant` vagrant /vagrant
+
+The error output from the last command was:
+
+/sbin/mount.vboxsf: mounting failed with the error: No such devic
+```
+共有フォルダ作ってたみたいなのでそれが原因、vagrant用プラグインvagrant-vbguestを入れる。
+http://qiita.com/akippiko/items/278efedee35661634b85
+
+```
+~/kaihatu ❯❯❯ vagrant plugin install vagrant-vbguest
+Installing the 'vagrant-vbguest' plugin. This can take a few minutes...
+Installed the plugin 'vagrant-vbguest (0.11.0)'!
+~/kaihatu ❯❯❯ vagrant up                                                                                                             ⏎
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Clearing any previously set forwarded ports...
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+    default: Adapter 2: hostonly
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Remote connection disconnect. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+==> default: Machine booted and ready!
+No installation found.
+Package kernel-devel-3.10.0-327.18.2.el7.x86_64 already installed and latest version
+Package gcc-4.8.5-4.el7.x86_64 already installed and latest version
+Package 1:make-3.82-21.el7.x86_64 already installed and latest version
+Package 4:perl-5.16.3-286.el7.x86_64 already installed and latest version
+Package bzip2-1.0.6-13.el7.x86_64 already installed and latest version
+Nothing to do
+Copy iso file /usr/share/virtualbox/VBoxGuestAdditions.iso into the box /tmp/VBoxGuestAdditions.iso
+mount: /dev/loop0 is write-protected, mounting read-only
+Installing Virtualbox Guest Additions 5.0.20 - guest version is unknown
+Verifying archive integrity... All good.
+Uncompressing VirtualBox 5.0.20 Guest Additions for Linux............
+VirtualBox Guest Additions installer
+Removing installed version 5.0.20 of VirtualBox Guest Additions...
+Removing existing VirtualBox non-DKMS kernel modules[  OK  ]
+Copying additional installer modules ...
+Installing additional modules ...
+Removing existing VirtualBox non-DKMS kernel modules[  OK  ]
+Building the VirtualBox Guest Additions kernel modules
+Building the main Guest Additions module[  OK  ]
+Building the shared folder support module[  OK  ]
+Building the graphics driver module[  OK  ]
+Doing non-kernel setup of the Guest Additions[  OK  ]
+Starting the VirtualBox Guest Additions Installing the Window System drivers
+Could not find the X.Org or XFree86 Window System, skipping.
+[  OK  ]
+==> default: Checking for guest additions in VM...
+==> default: Configuring and enabling network interfaces...
+==> default: Mounting shared folders...
+    default: /vagrant => /home/n15001/kaihatu
+==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> default: flag to force provisioning. Provisioners marked to run always will still run.
+~/kaihatu ❯❯❯  vagrant vbguest --status
+GuestAdditions 5.0.20 running --- OK.
+
+```
