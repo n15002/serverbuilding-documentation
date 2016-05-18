@@ -171,13 +171,12 @@ http://CentOSのIP/wordpress/wp-admin/install.phpへアクセスして、適宜�
 何も問題が無ければインストールが完了し、記事も投稿できるはず。  
 ![インストール完了画面](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/2.png)
 
-Stderr: VBoxManage: error: Implementation of the USB 2.0 controller not found!~
-なエラーが出る。
-拡張機能をここからダウンロードして追加する
-https://www.virtualbox.org/wiki/Downloads
+Stderr: VBoxManage: error: Implementation of the USB 2.0 controller not found!~ なエラーが出る。  
+拡張機能をここからダウンロードして追加する  
+https://www.virtualbox.org/wiki/Downloads  
 
 
-Section 2 その他のWebサーバー環境
+Section 2 その他のWebサーバー環境  
 ------
 ```
 ~/hoge ❯❯❯  vagrant up                                                                                               ⏎
@@ -216,23 +215,23 @@ Last login: Wed May 11 10:18:14 2016
 [vagrant@localhost ~]$
 ```
 
-http://www.server-memo.net/memo/wordpress/nginx-install.html
+http://www.server-memo.net/memo/wordpress/nginx-install.html  
 
-sudo vi /etc/yum.conf
+sudo vi /etc/yum.conf  
 sudo vi /etc/wgetrc
 
-systemctl enable mysql
-systemctl restart nginx
-systemctl status nginx
-sudo nginx -t
+systemctl enable mysql  
+systemctl restart nginx  
+systemctl status nginx  
+sudo nginx -t  
 sudo vi /etc/nginx/nginx.conf
 
-トップページだけ403になって謎だった
-indexディレクティブを書かないとダメ
-http://stackoverflow.com/questions/27093823/403-forbidden-error-in-nginx-configuration-for-wordpress-site
-2-2はできた
+トップページだけ403になって謎だった  
+indexディレクティブを書かないとダメ  
+http://stackoverflow.com/questions/27093823/403-forbidden-error-in-nginx-configuration-for-wordpress-site  
+2-2はできた  
 
-abてすとくそでわ
+abてすとくそでわ  
 ```
 ~ ❯❯❯ ab -n 100 -c 100 http://192.168.56.129/                                                                          ⏎
 This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
@@ -278,7 +277,7 @@ Percentage of the requests served within a certain time (ms)
   99%  93163
  100%  93163 (longest request)
 ```
-2日目にvagrant up したらエラーはいた
+2日目にvagrant up したらエラーはいた  
 ```
 Failed to mount folders in Linux guest. This is usually because
 the "vboxsf" file system is not available. Please verify that
@@ -352,5 +351,11 @@ Could not find the X.Org or XFree86 Window System, skipping.
 ==> default: flag to force provisioning. Provisioners marked to run always will still run.
 ~/kaihatu ❯❯❯  vagrant vbguest --status
 GuestAdditions 5.0.20 running --- OK.
-
 ```
+PageSpeed Insights (with PNaCl)  
+https://chrome.google.com/webstore/detail/pagespeed-insights-with-p/lanlbpjbalfkflkhegagflkgcfklnbnh?hl=ja  
+
+僕の環境chromiumじゃ動かなかった、純chromeじゃないとダメらしい。
+点数：78/100  
+jqueryなんかを圧縮してサイズ減らせって書いてあった  
+
