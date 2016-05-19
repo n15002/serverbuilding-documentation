@@ -436,4 +436,11 @@ Zend Engine v3.0.0, Copyright (c) 1998-2015 Zend Technologies
 httpd.exp       libphp7.so      mod_rewrite.so  
 
 ```
+sudo vi /usr/local/apache2/conf/httpd.conf  
+LoadModule php7_module  modules/libphp7.soがあるか確認する、無ければ書く。  
+AddType application/x-httpd-php .phpと  
+DirectoryIndex にindex.phpを追加する
 
+wordpressをwgetしてデータベース作ってconfig書いて自分のIP/wordpressにアクセスしてはいちゅんちゅん(・8・)
+
+![wordpressがめん](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-19%2020-53-17.png "wordpressがめん")
