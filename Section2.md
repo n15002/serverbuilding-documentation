@@ -337,3 +337,103 @@ daemon   12183  0.0  0.1  27768  1140 ?        S    17:34   0:00 /usr/local/apac
 daemon   12223  0.0  0.1  27768  1144 ?        S    17:49   0:00 /usr/local/apache2/bin/httpd -k start
 ```
 ![apache2.2いんすこ画像](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-19%2018-11-24.png "apache2.2いんすこ画像")
+
+modrewite入ってなかった
+```
+[vagrant@localhost ~]$ sudo /usr/local/apache2/bin/apxs -i -a -c ~/httpd-2.2.31/modules/mappers/mod_rewrite.c
+/usr/local/apache2/build/libtool --silent --mode=compile gcc -prefer-pic   -DLINUX -D_REENTRANT -D_GNU_SOURCE -g -O2 -pthread -I/usr/local/apache2/include  -I/usr/local/apache2/include   -I/usr/local/apache2/include   -c -o /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.lo /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.c && touch /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.slo
+/usr/local/apache2/build/libtool --silent --mode=link gcc -o /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.la  -rpath /usr/local/apache2/modules -module -avoid-version    /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.lo
+/usr/local/apache2/build/instdso.sh SH_LIBTOOL='/usr/local/apache2/build/libtool' /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.la /usr/local/apache2/modules
+/usr/local/apache2/build/libtool --mode=install cp /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.la /usr/local/apache2/modules/
+cp /home/vagrant/httpd-2.2.31/modules/mappers/.libs/mod_rewrite.so /usr/local/apache2/modules/mod_rewrite.so
+cp /home/vagrant/httpd-2.2.31/modules/mappers/.libs/mod_rewrite.lai /usr/local/apache2/modules/mod_rewrite.la
+cp /home/vagrant/httpd-2.2.31/modules/mappers/.libs/mod_rewrite.a /usr/local/apache2/modules/mod_rewrite.a
+chmod 644 /usr/local/apache2/modules/mod_rewrite.a
+ranlib /usr/local/apache2/modules/mod_rewrite.a
+PATH="$PATH:/sbin" ldconfig -n /usr/local/apache2/modules
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /usr/local/apache2/modules
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,--rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+chmod 755 /usr/local/apache2/modules/mod_rewrite.so
+[activating module `rewrite' in /usr/local/apache2/conf/httpd.conf]
+[vagrant@localhost ~]$ ls /usr/local/apache2/modules/
+httpd.exp       mod_rewrite.so 
+```
+libphp7.soが入ってなかったのでコピペで再ビルド
+http://qiita.com/ssaita/items/9e0170251d45ed1b8818
+
+configure: error: xpm.h not found.
+yum install libXpm-devel.x86_64
+configure: error: Unable to locate gmp.h
+yum install gmp-devel 
+
+mysql_config not found
+configure: error: Please reinstall the mysql distribution
+[vagrant@localhost php-src]$ mysql_config
+-bash: mysql_config: コマンドが見つかりません
+[vagrant@localhost php-src]$ sudo yum install mariadb-devel -y
+[vagrant@localhost php-src]$ which mysql_config
+/usr/bin/mysql_config
+configure: error: Cannot find pspell
+
+```
+[vagrant@localhost php-src]$ sudo make install
+Installing PHP SAPI module:       apache2handler
+/usr/local/apache2/build/instdso.sh SH_LIBTOOL='/usr/local/apache2/build/libtool' libphp7.la /usr/local/apache2/modules
+/usr/local/apache2/build/libtool --mode=install cp libphp7.la /usr/local/apache2/modules/
+cp .libs/libphp7.so /usr/local/apache2/modules/libphp7.so
+cp .libs/libphp7.lai /usr/local/apache2/modules/libphp7.la
+libtool: install: warning: remember to run `libtool --finish /home/vagrant/php-src/libs'
+chmod 755 /usr/local/apache2/modules/libphp7.so
+[activating module `php7' in /usr/local/apache2/conf/httpd.conf]
+Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20151012/
+Installing PHP CLI binary:        /usr/local/bin/
+Installing PHP CLI man page:      /usr/local/php/man/man1/
+Installing phpdbg binary:         /usr/local/bin/
+Installing phpdbg man page:       /usr/local/php/man/man1/
+Installing PHP CGI binary:        /usr/local/bin/
+Installing PHP CGI man page:      /usr/local/php/man/man1/
+Installing build environment:     /usr/local/lib/php/build/
+Installing header files:          /usr/local/include/php/
+Installing helper programs:       /usr/local/bin/
+  program: phpize
+  program: php-config
+Installing man pages:             /usr/local/php/man/man1/
+  page: phpize.1
+  page: php-config.1
+Installing PEAR environment:      /usr/local/lib/php/
+[PEAR] Archive_Tar    - already installed: 1.4.0
+[PEAR] Console_Getopt - already installed: 1.4.1
+[PEAR] Structures_Graph- already installed: 1.1.1
+[PEAR] XML_Util       - already installed: 1.3.0
+[PEAR] PEAR           - already installed: 1.10.1
+Wrote PEAR system config file at: /usr/local/etc/pear.conf
+You may want to add: /usr/local/lib/php to your php.ini include_path
+/home/vagrant/php-src/build/shtool install -c ext/phar/phar.phar /usr/local/bin
+ln -s -f phar.phar /usr/local/bin/phar
+Installing PDO headers:          /usr/local/include/php/ext/pdo/
+[vagrant@localhost php-src]$ php -v
+PHP 7.0.2 (cli) (built: May 19 2016 20:19:36) ( NTS )
+Copyright (c) 1997-2015 The PHP Group
+Zend Engine v3.0.0, Copyright (c) 1998-2015 Zend Technologies
+
+[vagrant@localhost php-src]$ ls /usr/local/apache2/modules/
+httpd.exp       libphp7.so      mod_rewrite.so  
+
+```
+
