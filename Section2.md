@@ -446,3 +446,52 @@ sudo /usr/local/apache2/bin/httpd -k restart
 wordpressをwgetしてデータベース作ってconfig書いて自分のIPにアクセスしてはいちゅんちゅん(・8・)
 
 ![wordpressがめん](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-19%2020-53-17.png "wordpressがめん")
+
+abtest、100リクエスト全部捌けてるっぽい。
+```
+~ ❯❯❯ sudo ab -n 100 -c 100 http://192.168.56.130/                                                                                   ⏎
+[sudo] password for n15001: 
+This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 192.168.56.130 (be patient).....done
+
+
+Server Software:        Apache/2.2.31
+Server Hostname:        192.168.56.130
+Server Port:            80
+
+Document Path:          /
+Document Length:        263 bytes
+
+Concurrency Level:      100
+Time taken for tests:   102.097 seconds
+Complete requests:      100
+Failed requests:        0
+Non-2xx responses:      100
+Total transferred:      59400 bytes
+HTML transferred:       26300 bytes
+Requests per second:    0.98 [#/sec] (mean)
+Time per request:       102097.003 [ms] (mean)
+Time per request:       1020.970 [ms] (mean, across all concurrent requests)
+Transfer rate:          0.57 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        8   20   7.8     21      33
+Processing: 26725 56369 19722.1  57032  102087
+Waiting:    26058 56072 19845.0  57032  102067
+Total:      26733 56389 19728.6  57046  102096
+
+Percentage of the requests served within a certain time (ms)
+  50%  57046
+  66%  71397
+  75%  73806
+  80%  79396
+  90%  80626
+  95%  81247
+  98%  96518
+  99%  102096
+ 100%  102096 (longest request)
+```
