@@ -359,3 +359,86 @@ https://chrome.google.com/webstore/detail/pagespeed-insights-with-p/lanlbpjbalfk
 点数：78/100  
 jqueryなんかを圧縮してサイズ減らせって書いてあった  
 
+http://php.net/manual/ja/migration70.php
+```
+sudo vi ~/.gitconfig
+[http]  
+    proxy = http://学校のプロキシ:ぽーと
+[https] 
+    proxy = https://学校のプロキシ:ポート
+
+git clone -b PHP-7.0.2 https://github.com/php/php-src.git
+yum install autoconf
+[vagrant@localhost php-src]$ ./buildconf --force
+[vagrant@localhost php-src]$ ./configure --help 
+[vagrant@localhost php-src]$ ./configure --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=--enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-pdo-mysql --with-mysqli --with-mysql-sock=/var/run/mysqld/mysqld.sock --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=USER --with-fpm-group=USER --with-libdir --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for a sed that does not truncate output... /usr/bin/sed
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... x86_64-unknown-linux-gnu
+checking target system type... x86_64-unknown-linux-gnu
+checking for cc... cc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether cc accepts -g... yes
+checking for cc option to accept ISO C89... none needed
+checking how to run the C preprocessor... cc -E
+checking for icc... no
+checking for suncc... no
+checking whether cc understands -c and -o together... yes
+checking how to run the C preprocessor... cc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking minix/config.h usability... no
+checking minix/config.h presence... no
+checking for minix/config.h... no
+checking whether it is safe to define __EXTENSIONS__... yes
+checking whether ln -s works... yes
+checking for system library directory... yes
+checking whether to enable runpaths... no
+checking if compiler supports -R... no
+checking if compiler supports -Wl,-rpath,... yes
+checking for gawk... gawk
+checking for bison... no
+checking for byacc... no
+checking for bison version... invalid
+configure: WARNING: This bison version is not supported for regeneration of the Zend/PHP parsers (found: none, min: 204, excluded: ).
+checking for re2c... no
+configure: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP parsers.
+configure: error: bison is required to build PHP/Zend when building a GIT checkout!
+
+wget http://downloads.sourceforge.net/project/re2c/0.16/re2c-0.16.tar.gz
+tar zxvf re2c-0.16.tar.gz
+cd re2c-0.16
+./configure
+make
+
+sudo yum install bison
+
+再びconfigureでエラー：configure: error: mcrypt.h not found. Please reinstall libmcrypt.
+
+sudo yum install epel-release
+sudo vi /etc/yum.repos.d/epel.repo →enabled=1を0に変更して明示的にー
+sudo yum --enablerepo=epel install libmcrypt-devel
+
+make & make install
+
+
+
+G++が見つかりません
+yum install gcc-c++
+
+```
