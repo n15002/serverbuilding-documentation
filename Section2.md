@@ -374,21 +374,21 @@ chmod 755 /usr/local/apache2/modules/mod_rewrite.so
 [vagrant@localhost ~]$ ls /usr/local/apache2/modules/
 httpd.exp       mod_rewrite.so 
 ```
-libphp7.soが入ってなかったのでコピペで再ビルド
+libphp7.soが入ってなかったのでコピペで再ビルド  
 http://qiita.com/ssaita/items/9e0170251d45ed1b8818
 
-configure: error: xpm.h not found.
-yum install libXpm-devel.x86_64
-configure: error: Unable to locate gmp.h
+configure: error: xpm.h not found.  
+yum install libXpm-devel.x86_64  
+configure: error: Unable to locate gmp.h  
 yum install gmp-devel 
 
-mysql_config not found
-configure: error: Please reinstall the mysql distribution
-[vagrant@localhost php-src]$ mysql_config
--bash: mysql_config: コマンドが見つかりません
-[vagrant@localhost php-src]$ sudo yum install mariadb-devel -y
-[vagrant@localhost php-src]$ which mysql_config
-/usr/bin/mysql_config
+mysql_config not found  
+configure: error: Please reinstall the mysql distribution  
+[vagrant@localhost php-src]$ mysql_config  
+-bash: mysql_config: コマンドが見つかりません  
+[vagrant@localhost php-src]$ sudo yum install mariadb-devel -y  
+[vagrant@localhost php-src]$ which mysql_config  
+/usr/bin/mysql_config  
 configure: error: Cannot find pspell
 
 ```
@@ -438,12 +438,12 @@ httpd.exp       libphp7.so      mod_rewrite.so
 ```
 sudo vi /usr/local/apache2/conf/httpd.conf  
 LoadModule php7_module  modules/libphp7.soがあるか確認する、無ければ書く。  
-DocumentRoot "/usr/local/apache2/htdocs/wordpress/"と書き足す
+DocumentRoot "/usr/local/apache2/htdocs/wordpress/"と書き足す  
 AddType application/x-httpd-php .phpと  
-DirectoryIndex にindex.phpを追加する
-sudo /usr/local/apache2/bin/httpd -k restart
+DirectoryIndex にindex.phpを追加する  
+sudo /usr/local/apache2/bin/httpd -k restart  
 
-wordpressをwgetしてデータベース作ってconfig書いて自分のIPにアクセスしてはいちゅんちゅん(・8・)
+wordpressをwgetしてデータベース作ってconfig書いて自分のIPにアクセスしてはいちゅんちゅん(・8・)  
 
 ![wordpressがめん](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-19%2020-53-17.png "wordpressがめん")
 
