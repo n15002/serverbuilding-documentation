@@ -454,9 +454,7 @@ abtest、100リクエスト全部捌けてるっぽい。
 This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
-
 Benchmarking 192.168.56.130 (be patient).....done
-
 
 Server Software:        Apache/2.2.31
 Server Hostname:        192.168.56.130
