@@ -437,8 +437,52 @@ sudo vi /etc/yum.repos.d/epel.repo →enabled=1を0に変更して明示的に�
 sudo yum --enablerepo=epel install libmcrypt-devel
 
 make
-sudo make install permission errorが出たのでsudoつけよう
+permission errorが出たのでsudo付けてmake install
+[vagrant@localhost php-src]$ sudo make install
+Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20151012/
+Installing PHP CLI binary:        /usr/local/bin/
+Installing PHP CLI man page:      /usr/local/php/man/man1/
+Installing PHP FPM binary:        /usr/local/sbin/
+Installing PHP FPM config:        /usr/local/etc/
+Installing PHP FPM man page:      /usr/local/php/man/man8/
+Installing PHP FPM status page:      /usr/local/php/php/fpm/
+Installing phpdbg binary:         /usr/local/bin/
+Installing phpdbg man page:       /usr/local/php/man/man1/
+Installing PHP CGI binary:        /usr/local/bin/
+Installing PHP CGI man page:      /usr/local/php/man/man1/
+Installing build environment:     /usr/local/lib/php/build/
+Installing header files:          /usr/local/include/php/
+Installing helper programs:       /usr/local/bin/
+  program: phpize
+  program: php-config
+Installing man pages:             /usr/local/php/man/man1/
+  page: phpize.1
+  page: php-config.1
+Installing PEAR environment:      /usr/local/lib/php/
+--2016-05-19 16:49:51--  https://pear.php.net/install-pear-nozlib.phar
+学校のプロキシ:ぽーと に接続しています... 接続しました。
+Proxy による接続要求を送信しました、応答を待っています... 200 OK
+長さ: 3579275 (3.4M) [text/plain]
+`pear/install-pear-nozlib.phar' に保存中
 
+100%[=============================================================================================>] 3,579,275    720KB/s 時間 5.1s   
+
+2016-05-19 16:49:58 (681 KB/s) - `pear/install-pear-nozlib.phar' へ保存完了 [3579275/3579275]
+
+[PEAR] Archive_Tar    - installed: 1.4.0
+[PEAR] Console_Getopt - installed: 1.4.1
+[PEAR] Structures_Graph- installed: 1.1.1
+[PEAR] XML_Util       - installed: 1.3.0
+[PEAR] PEAR           - installed: 1.10.1
+Wrote PEAR system config file at: /usr/local/etc/pear.conf
+You may want to add: /usr/local/lib/php to your php.ini include_path
+/home/vagrant/php-src/build/shtool install -c ext/phar/phar.phar /usr/local/bin
+ln -s -f phar.phar /usr/local/bin/phar
+Installing PDO headers:          /usr/local/include/php/ext/pdo/
+$ php -v
+PHP 7.0.2 (cli) (built: May 19 2016 16:45:06) ( NTS )
+Copyright (c) 1997-2015 The PHP Group
+Zend Engine v3.0.0, Copyright (c) 1998-2015 Zend Technologies
 
 
 ```
