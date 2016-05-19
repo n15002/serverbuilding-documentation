@@ -424,6 +424,8 @@ wget http://downloads.sourceforge.net/project/re2c/0.16/re2c-0.16.tar.gz
 tar zxvf re2c-0.16.tar.gz
 cd re2c-0.16
 ./configure
+G++が見つかりません
+yum install gcc-c++
 make
 
 sudo yum install bison
@@ -434,11 +436,9 @@ sudo yum install epel-release
 sudo vi /etc/yum.repos.d/epel.repo →enabled=1を0に変更して明示的にー
 sudo yum --enablerepo=epel install libmcrypt-devel
 
-make & make install
+make
+sudo make install permission errorが出たのでsudoつけよう
 
 
-
-G++が見つかりません
-yum install gcc-c++
 
 ```
