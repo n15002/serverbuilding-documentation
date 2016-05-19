@@ -315,10 +315,11 @@ Zend Engine v3.0.0, Copyright (c) 1998-2015 Zend Technologies
 ```
 apache2.2のインストール
 ------
-wget http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.gz
-tar zxvf httpd-2.2.31.tar.gz
-cd httpd-2.2.31
-./configure 
-make 
+wget http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.gz  
+tar zxvf httpd-2.2.31.tar.gz  
+cd httpd-2.2.31  
+./configure  
+make  
 sudo make install
+
 
