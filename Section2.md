@@ -493,3 +493,5 @@ Percentage of the requests served within a certain time (ms)
   99%  102096
  100%  102096 (longest request)
 ```
+PageSpeed Insightsは78/100点
+セクション2.2のサーバと同じような事が書いてた
