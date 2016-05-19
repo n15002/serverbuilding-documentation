@@ -320,6 +320,20 @@ tar zxvf httpd-2.2.31.tar.gz
 cd httpd-2.2.31  
 ./configure  
 make  
-sudo make install
+sudo make install  
 
-
+prefixつけたほうがいいのかも
+```
+[vagrant@localhost httpd-2.2.31]$ sudo /usr/local/apache2/bin/apachectl -v
+Server version: Apache/2.2.31 (Unix)
+Server built:   May 19 2016 17:21:16
+[vagrant@localhost httpd-2.2.31]$ sudo ps -aux |grep -i httpd
+root     12178  0.0  0.1  27768  1644 ?        Ss   17:34   0:00 /usr/local/apache2/bin/httpd -k start
+daemon   12179  0.0  0.1  27768  1140 ?        S    17:34   0:00 /usr/local/apache2/bin/httpd -k start
+daemon   12180  0.0  0.1  27904  1796 ?        S    17:34   0:00 /usr/local/apache2/bin/httpd -k start
+daemon   12181  0.0  0.1  27768  1140 ?        S    17:34   0:00 /usr/local/apache2/bin/httpd -k start
+daemon   12182  0.0  0.1  27768  1140 ?        S    17:34   0:00 /usr/local/apache2/bin/httpd -k start
+daemon   12183  0.0  0.1  27768  1140 ?        S    17:34   0:00 /usr/local/apache2/bin/httpd -k start
+daemon   12223  0.0  0.1  27768  1144 ?        S    17:49   0:00 /usr/local/apache2/bin/httpd -k start
+```
+![apache2.2いんすこ画像](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-19%2018-11-24.png "apache2.2いんすこ画像")
