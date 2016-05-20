@@ -593,4 +593,7 @@ nvtだけでもスキャンできるっぽい。
   PID TTY      STAT   TIME COMMAND
 14820 ?        Rs     1:48 openvassd: Reloaded 32400 of 47056 NVTs (68% / ETA: 00:54)
 ロードもスキャンもかなり長い
+
+スキャン開始２０分くらいで落ちた
+
 ```
