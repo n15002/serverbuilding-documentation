@@ -495,3 +495,64 @@ Percentage of the requests served within a certain time (ms)
 ```
 PageSpeed Insightsは78/100点
 セクション2.2のサーバと同じような事が書いてた
+
+とりあえずセキュリティチェック
+ノパソ本体（ubuntu16.04）にOpenVasのインストール
+https://launchpad.net/~mrazavi/+archive/ubuntu/openvas
+```
+sudo vi /etc/apt/sources.list
+deb http://ppa.launchpad.net/mrazavi/openvas/ubuntu YOUR_UBUNTU_VERSION_HERE main を追加
+sudo apt update
+~/k/openvas ❯❯❯ sudo apt-cache search openvas                                                                           ⏎
+openvas-scanner - remote network security auditor - scanner
+openvas-cli - remote network security auditor - cli
+openvas-manager - remote network security auditor - manager
+openvas - remote network security auditor - metapackage
+libopenvas8-dev - remote network security auditor - static libraries and headers
+libopenvas8 - remote network security auditor - shared libraries
+openvas-gsa - remote network security auditor - web interface
+libopenvas9-dev - remote network security auditor - static libraries and headers
+libopenvas9 - remote network security auditor - shared libraries
+openvas9-scanner - remote network security auditor - scanner
+openvas9-manager - remote network security auditor - manager
+openvas9 - remote network security auditor - metapackage
+openvas9-cli - remote network security auditor - cli
+openvas9-gsa - remote network security auditor - web interface
+sudo apt install openvas -y
+```
+sudo service openvas-scanner status
+sudo service openvas-manager status
+https://localhostにアクセスする
+ユーザ名:admin password:admin
+
+nmap
+```
+~/k/openvas ❯❯❯ sudo nmap -A 192.168.56.130
+Starting Nmap 7.01 ( https://nmap.org ) at 2016-05-20 09:50 JST
+Nmap scan report for 192.168.56.130
+Host is up (0.0027s latency).
+Not shown: 997 closed ports
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 6.6.1 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 99:46:8f:89:7a:61:15:60:75:3b:b3:76:8e:e3:5f:e5 (RSA)
+|_  256 a6:42:51:74:ea:0d:da:92:6f:c8:0b:3b:37:8a:f5:5b (ECDSA)
+80/tcp   open  http    Apache httpd 2.2.31 ((Unix) PHP/7.0.2)
+|_http-generator: WordPress 4.5.2
+|_http-server-header: Apache/2.2.31 (Unix) PHP/7.0.2
+|_http-title: n15001\xE3\x81\xAE\xE3\x81\xB6\xE3\x82\x8D\xE3\x81\x90 &#8211; Just another WordPress site
+3306/tcp open  mysql   MariaDB (unauthorized)
+MAC Address: 08:00:27:32:BB:52 (Oracle VirtualBox virtual NIC)
+Device type: general purpose
+Running: Linux 3.X|4.X
+OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4
+OS details: Linux 3.2 - 4.0
+Network Distance: 1 hop
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   2.74 ms 192.168.56.130
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 27.02 seconds
+```
