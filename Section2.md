@@ -524,6 +524,7 @@ sudo service openvas-scanner status
 sudo service openvas-manager status
 https://localhostにアクセスする
 ユーザ名:admin password:admin
+オレオレ警告が出るけど”このURLにアクセスする”を選択
 
 nmap
 ```
