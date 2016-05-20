@@ -557,3 +557,23 @@ HOP RTT     ADDRESS
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 27.02 seconds
 ```
+
+```
+sudo openvas-nvt-sync
+sudo openvas-scapdata-sync
+sudo openvas-certdata-sync
+上の３つを打っていろんなファイルをダウンロードしたりする。
+~/k/openvas ❯❯❯ sudo openvas-scapdata-sync
+[i] This script synchronizes a SCAP data directory with the OpenVAS one.
+[i] This script is for the SQLite3 backend.
+[i] SCAP dir: /var/lib/openvas/scap-data
+[i] Will use rsync
+[i] Using rsync: /usr/bin/rsync
+[i] Configured SCAP data rsync feed: rsync://feed.openvas.org:/scap-data
+^Crsync error: received SIGINT, SIGTERM, or SIGHUP (code 20) at rsync.c(632) [Receiver=3.1.1]
+[e] Error: rsync failed. Your SCAP data might be broken now
+
+SSH塞がってるのにどうしろと
+
+
+```
