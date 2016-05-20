@@ -575,5 +575,16 @@ sudo openvas-certdata-sync
 
 SSH塞がってるのにどうしろと
 
+~/k/openvas ❯❯❯ which openvas-scapdata-sync                                                                 ⏎
+/usr/sbin/openvas-scapdata-sync
+sudo cat /usr/sbin/openvas-scapdata-sync
+〜
+do_wget () {
+  echo "[w] Download of SCAP data via HTTP is currently not supported!"
+  exit 1
+}
+〜
+ナンダコノ関数
+参照先のOV_HTTP_FEED=http://www.openvas.org/openvas-scap-data-current.tar.bz2もリンク切れだし意味わかめ
 
 ```
