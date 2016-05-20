@@ -587,4 +587,10 @@ do_wget () {
 ナンダコノ関数
 参照先のOV_HTTP_FEED=http://www.openvas.org/openvas-scap-data-current.tar.bz2もリンク切れだし意味わかめ
 
+nvtだけでもスキャンできるっぽい。
+
+~/k/openvas ❯❯❯ ps 14820
+  PID TTY      STAT   TIME COMMAND
+14820 ?        Rs     1:48 openvassd: Reloaded 32400 of 47056 NVTs (68% / ETA: 00:54)
+ロードもスキャンもかなり長い
 ```
