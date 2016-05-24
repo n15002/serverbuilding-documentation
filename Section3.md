@@ -50,3 +50,16 @@ Host 192.168.56.*
     "ping": "pong"
 }
 ```
+
+ansibleでパッケージのインストールができた
+```
+~ ❯❯❯ ansible -i hosts 192.168.56.130 -m yum -s -a name=telnet -u vagrant --private-key="~/.ssh/id_rsa"
+192.168.56.130 | SUCCESS => {
+    "changed": true, 
+    "msg": "", 
+    "rc": 0, 
+    "results": [
+        "読み込んだプラグイン:fastestmirror\nLoading mirror speeds from cached hostfile\n * base: ftp.iij.ad.jp\n * extras: download.nus.edu.sg\n * updates: ftp.iij.ad.jp\n依存性の解決をしています\n--> トランザクションの確認を実行しています。\n---> パッケージ telnet.x86_64 1:0.17-59.el7 を インストール\n--> 依存性解決を終了しました。\n\n依存性を解決しました\n\n================================================================================\n Package          アーキテクチャー バージョン              リポジトリー    容量\n================================================================================\nインストール中:\n telnet           x86_64           1:0.17-59.el7           base            63 k\n\nトランザクションの要約\n================================================================================\nインストール  1 パッケージ\n\n総ダウンロード容量: 63 k\nインストール容量: 113 k\nDownloading packages:\nRunning transaction check\nRunning transaction test\nTransaction test succeeded\nRunning transaction\n  インストール中          : 1:telnet-0.17-59.el7.x86_64                     1/1 \n  検証中                  : 1:telnet-0.17-59.el7.x86_64                     1/1 \n\nインストール:\n  telnet.x86_64 1:0.17-59.el7                                                   \n\n完了しました!\n"
+    ]
+}
+```
