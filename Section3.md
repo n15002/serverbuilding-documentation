@@ -20,8 +20,10 @@ echo 192.168.56.130 > hosts
     "unreachable": true
 }
 ```
-鍵認証にするみたい
+鍵認証にするみたい  
 http://qiita.com/HamaTech/items/21bb9761f326c4d4aa65
+
+ssh-keygen -t rsa
 
 ```
 ~ ❯❯❯ ansible -i hosts 192.168.56.130 -m ping                                                                                        ⏎
