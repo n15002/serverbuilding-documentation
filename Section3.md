@@ -72,7 +72,7 @@ ansible用に新しく立ち上げる
 ~/k/ansible-server ❯❯❯ vagrant ssh
 [vagrant@localhost ~]$ sudo chmod 600 ~/.ssh/authorized_keys
 ~/k/ansible-server ❯❯❯ vsecho 192.168.56.131 >> ~/hosts
-~/k/ansible-server ❯❯❯ vsdo vi /etc/ansible/ansible.cfg
+~/k/ansible-server ❯❯❯ v/sudo etc/ansible/ansible.cfg
 [defaults]
 hostfile = /home/n15001/hosts
 remote_user = vagrant
@@ -82,6 +82,20 @@ private_key_file=/home/n15001/.vagrant.d/insecure_private_key
     "changed": false, 
     "ping": "pong"
 }
-
 ```
-
+```
+~ ❯❯❯ sudo nano ansible-wpingyml                                                                              ⏎
+---
+- hosts: 192.168.56.131
+  remote_user: vagrant
+  tasks:
+   - name: pingしてみる #taskの名前
+     ping:
+~ ❯❯❯ ansible-playbook ansible-wp.yml --check
+PLAY ***************************************************************************
+TASK [setup] *******************************************************************
+ok: [192.168.56.131]
+TASK [pingしてみる] ****************************************************************
+ok: [192.168.56.131]
+PLAY RECAP *********************************************************************
+```
