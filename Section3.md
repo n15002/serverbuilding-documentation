@@ -53,7 +53,7 @@ Host 192.168.56.*
 
 ansibleでパッケージのインストールができた
 ```
-~ ❯❯❯ ansible -i hosts 192.168.56.130 -m yum -s -a name=telnet -u vagrant --private-key="~/.ssh/id_rsa"
+~ ❯❯❯ ansible -i hosts 192.168.56.130 -m yum -s -a name=telnet 
 192.168.56.130 | SUCCESS => {
     "changed": true, 
     "msg": "", 
@@ -63,3 +63,25 @@ ansibleでパッケージのインストールができた
     ]
 }
 ```
+
+vagrantってデフォルトでかぎつくるのね
+ansible用に新しく立ち上げる
+```
+~/k/ansible-server ❯❯❯ vagrant init
+~/k/ansible-server ❯❯❯ vagrant up
+~/k/ansible-server ❯❯❯ vagrant ssh
+[vagrant@localhost ~]$ sudo chmod 600 ~/.ssh/authorized_keys
+~/k/ansible-server ❯❯❯ vsecho 192.168.56.131 >> ~/hosts
+~/k/ansible-server ❯❯❯ vsdo vi /etc/ansible/ansible.cfg
+[defaults]
+hostfile = /home/n15001/hosts
+remote_user = vagrant
+private_key_file=/home/n15001/.vagrant.d/insecure_private_key
+~/k/ansible-server ❯❯❯ ansible 192.168.56.131 -m ping                                                       ⏎
+192.168.56.131 | SUCCESS => {
+    "changed": false, 
+    "ping": "pong"
+}
+
+```
+
