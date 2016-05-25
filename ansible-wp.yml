@@ -1,0 +1,14 @@
+---
+- hosts: 192.168.56.131
+  remote_user: vagrant
+  tasks:
+   - name: pingしてみる #taskの名前
+     ping:
+   - name: yumproxy
+     lineinfile: >
+       dest=/etc/yum.conf
+       line='proxy=http://172.16.40.1:8888'
+   - name: yum update
+     yum: name=* state=latest
+   #- name:
+   #  yum: name=httpd state=latest
