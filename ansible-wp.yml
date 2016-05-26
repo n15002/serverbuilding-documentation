@@ -11,10 +11,25 @@
      lineinfile: >
        dest=/etc/yum.conf
        line='proxy=http://172.16.40.1:8888'
-   - name: yum update
-     yum: name=* state=latest
-   - name:
-     yum: name=httpd state=latest
+  # - name: nginx repo
+  #   yum: name=http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm state=present
+  # - name: nginx install
+  #   yum: name=nginx state=latest
+   - name: php install
+     yum: name=php,php-mbstring,php-pear,php-fpm,mariadb,mariadb-server state=latest
+   - file: path=/etc/php-fpm.d/www.conf state=touch mode="u=rw,g=rw,o=rw"
+   - name: "phpの設定ファイルかきかえ"
+     lineinfile: >-
+       dest='/etc/php-fpm.d/www.conf'
+       state=present
+       backrefs=yes
+       regexp='{{ item.regexp }}'
+       line='{{ item.line }}'
+     with_items:
+     - regexp: 'user = apache'
+       line: 'user = nginx'
+     - regexp: 'group = apache'
+       line: 'group = nginx'
 
 
 #LAMPまでの手順
@@ -22,6 +37,11 @@
 #まずはchmod 600 .ssh/authorized_keys
 #sudo vi /etc/yum.conf → proxy=http://172.16.40.1:8888を記述
 #sudo yum update プロンプトy
+
+
+#   - name:
+#     yum: name=httpd state=latest
+
 
 #- file: path=/etc/yum.conf owner=root group=root mode=0777
 
