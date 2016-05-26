@@ -1,14 +1,40 @@
 ---
 - hosts: 192.168.56.131
+  sudo: yes
   remote_user: vagrant
   tasks:
-   - name: pingしてみる #taskの名前
+   - name: pingてすと
      ping:
-   - name: yumproxy
+   - file: path=/home/vagrant/.ssh/authorized_keys state=touch mode="u=rw,g=,o="
+   - file: path=/etc/yum.conf state=touch mode="u=rw,g=rw,o=rw"
+   - name: yum.conf proxy
      lineinfile: >
        dest=/etc/yum.conf
        line='proxy=http://172.16.40.1:8888'
    - name: yum update
      yum: name=* state=latest
-   #- name:
+   - name:
+     yum: name=httpd state=latest
+
+
+#LAMPまでの手順
+#vagrant up
+#まずはchmod 600 .ssh/authorized_keys
+#sudo vi /etc/yum.conf → proxy=http://172.16.40.1:8888を記述
+#sudo yum update プロンプトy
+
+#- file: path=/etc/yum.conf owner=root group=root mode=0777
+
+#   - name: test
+#     lineinfile: >
+#       dest=/etc/hoge.txt
+#       line='proxy=http://172.16.40.1:8888'
+
+#   - name: yumproxy
+#     lineinfile: >
+#       dest=/etc/yum.conf
+#       line='proxy=http://172.16.40.1:8888'
+#   - name: yum update
+#     yum: name=* state=latest
+   #- name: 
    #  yum: name=httpd state=latest
