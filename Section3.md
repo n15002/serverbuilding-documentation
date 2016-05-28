@@ -100,3 +100,5 @@ ok: [192.168.56.131]
 PLAY RECAP *********************************************************************
 ```
 https://github.com/n15001/serverbuilding-documentation/blob/master/ansible-wp.yml
+
+インストール済みかどうかで条件分岐や、nginx設定ファイルの書き換えをどうしようか
