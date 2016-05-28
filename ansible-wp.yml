@@ -7,16 +7,16 @@
      ping:
    - file: path=/home/vagrant/.ssh/authorized_keys state=touch mode="u=rw,g=,o="
    - file: path=/etc/yum.conf state=touch mode="u=rw,g=rw,o=rw"
-   - name: yum.conf proxy
-     lineinfile: >
-       dest=/etc/yum.conf
-       line='proxy=http://172.16.40.1:8888'
+  # - name: yum.conf proxy
+  #   lineinfile: >
+  #     dest=/etc/yum.conf
+  #     line='proxy=http://172.16.40.1:8888'
   # - name: nginx repo
   #   yum: name=http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm state=present
   # - name: nginx install
   #   yum: name=nginx state=latest
    - name: php install
-     yum: name=php,php-mbstring,php-pear,php-fpm,mariadb,mariadb-server state=latest
+     yum: name=php,php-mbstring,php-pear,php-fpm,php-mysql,mariadb,mariadb-server state=latest
    - file: path=/etc/php-fpm.d/www.conf state=touch mode="u=rw,g=rw,o=rw"
    - name: "phpの設定ファイルかきかえ"
      lineinfile: >-
@@ -30,6 +30,17 @@
        line: 'user = nginx'
      - regexp: 'group = apache'
        line: 'group = nginx'
+   - file: path=/etc/nginx/conf.d/default.conf state=touch mode="u=rw,g=rw,o=rw"
+   - name: "nginx設定ファイルかきかえ"
+     shell: sed -i '30,36 s/#//g; 30,36 s/html/\/usr\/share\/nginx\/html\//g; s/\/scripts$fastcgi_script_name/$document_root$fastcgi_script_name/g; /$document_root$fastcgi_script_name\;/a fastcgi_param  PATH_INFO $fastcgi_path_info;' /etc/nginx/conf.d/default.conf
+   - file: path=/etc/wgetrc state=touch mode="u=rw,g=rw,o=rw"
+   - file: path=/usr/share/nginx/html state=touch mode="u=rw,g=rw,o=rwx"
+   - shell: sed -i "s/#https_proxy = http:\/\/proxy.yoyodyne.com:18023\//https_proxy = http:\/\/172.16.40.1:8888\//g; s/#http_proxy = http:\/\/proxy.yoyodyne.com:18023\//http_proxy = http:\/\/172.16.40.1:8888\//g" /etc/wgetrc 
+   - name: WordPress ダウンロード
+     get_url: url="https://ja.wordpress.org/wordpress-4.5.2-ja.tar.gz" dest=/tmp/
+     sudo: no
+   - name: wordpress 解凍
+     command: tar zxvf /tmp/wordpress-4.5.2-ja.tar.gz chdir=/usr/share/nginx/html/
 
 
 #LAMPまでの手順
