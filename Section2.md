@@ -127,7 +127,6 @@ The error output from the last command was:
 ```
 共有フォルダ作ってたみたいなのでそれが原因、vagrant用プラグインvagrant-vbguestを入れる。
 http://qiita.com/akippiko/items/278efedee35661634b85
-
 ```
 ~/kaihatu ❯❯❯ vagrant plugin install vagrant-vbguest
 Installing the 'vagrant-vbguest' plugin. This can take a few minutes...
@@ -186,14 +185,14 @@ Could not find the X.Org or XFree86 Window System, skipping.
 ~/kaihatu ❯❯❯  vagrant vbguest --status
 GuestAdditions 5.0.20 running --- OK.
 ```
-PageSpeed Insights (with PNaCl)  
-https://chrome.google.com/webstore/detail/pagespeed-insights-with-p/lanlbpjbalfkflkhegagflkgcfklnbnh?hl=ja  
+
+[PageSpeed Insights (with PNaCl)](https://chrome.google.com/webstore/detail/pagespeed-insights-with-p/lanlbpjbalfkflkhegagflkgcfklnbnh?hl=ja)
 
 僕の環境chromiumじゃ動かなかった、純chromeじゃないとダメらしい。
-点数：78/100  
+*点数：78/100* 
 jqueryなんかを圧縮してサイズ減らせって書いてあった  
 
-
+### 2-3 Wordpressを動かす(3)
 PHP7.0.2のインストール
 ------
 公式サイト：http://php.net/manual/ja/migration70.php
