@@ -1,9 +1,7 @@
-Stderr: VBoxManage: error: Implementation of the USB 2.0 controller not found!~ なエラーが出る。  
-拡張機能をここからダウンロードして追加する  
-https://www.virtualbox.org/wiki/Downloads  
-
 Section 2 その他のWebサーバー環境  
 ------
+###2-1 Vagrantを使用したCentOS 7環境の起動
+ここに書いてある通りにやりましょう。https://github.com/cloneko/serverbuilding/blob/master/Section2.md
 ```
 ~/hoge ❯❯❯  vagrant up                                                                                               ⏎
 Bringing machine 'default' up with 'virtualbox' provider...
@@ -40,24 +38,34 @@ vagrant@127.0.0.1's password:
 Last login: Wed May 11 10:18:14 2016
 [vagrant@localhost ~]$
 ```
+2回目起動したときにStderr: VBoxManage: error: Implementation of the USB 2.0 controller not found!~ なエラーが出た。  
+解決するために拡張機能をここからダウンロードして追加する  
+https://www.virtualbox.org/wiki/Downloads  
 
+###2-2 Wordpressを動かす(2)
 http://www.server-memo.net/memo/wordpress/nginx-install.html  
 
+プロキシの設定
+```
 sudo vi /etc/yum.conf  
+proxy = http://172.16.40.1:8888
 sudo vi /etc/wgetrc
-
+http_proxy = 172.16.40.1:8888
+```
+システムの自動起動と再起動
+```
 systemctl enable mysql  
 systemctl restart nginx  
 systemctl status nginx  
 sudo nginx -t  
-sudo vi /etc/nginx/nginx.conf
-
+```
 トップページだけ403になって謎だった  
 indexディレクティブを書かないとダメ  
 http://stackoverflow.com/questions/27093823/403-forbidden-error-in-nginx-configuration-for-wordpress-site  
 2-2はできた  
 
-abてすとくそでわ  
+##2-2のサーバでApacheBench結果
+（100人同時に1リクエスト）
 ```
 ~ ❯❯❯ ab -n 100 -c 100 http://192.168.56.129/                                                                          ⏎
 This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
