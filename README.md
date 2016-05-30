@@ -1,30 +1,41 @@
 Section 1 基本のサーバー構築
-------
+=====
 https://github.com/cloneko/serverbuilding/blob/master/Section1.md
 
+1-1 CentOS 7のインストール
+-----
 ターミナルでvirtualboxと打つか、ダッシュボードから検索して起動する。
+タブの新規からCentOS7のISOファイルを選択し、仮想マシンを作成する。
 
 ホストオンリーアダプタが未選択状態で設定することが出来ない。  
 これで解決 http://tyoimemo.blogspot.jp/2012/03/blog-post.html  
 
-パソコンに右Ctrlが無いので、環境設定からホストキーを左Ctrl+Shiftに変更する。  
+パソコンに右Ctrlが無いので、**環境設定**からホストキーを左Ctrl+Shiftに変更する。  
 isoを指定して起動順番をディスク＞HDDに変更  
 プロセッサーを2CPUに変更して80%使用率制限した  
 
-デフォでインターフェースごとにDHCP書いてあったので、ONBOOTをyesにしてservice network restartでip a でIP確認してからSSHできた
+**/etc/sysconfig/network-scriptにifcfg-enp0s?**にはデフォルトでインターフェースごとにDHCPと書いてあるので、ONBOOTをyesに書き換え、
+`service network restart`で`ip a`でIP確認してから、母機から`ssh vagrant@確認したIP`で接続する。（パスワードもvagrant）
 
-proxy設定  
-http://qiita.com/chidakiyo/items/95cbc263f8157cfa5cd7
+1-2 Wordpressを動かす(1)
+-----
+proxyの設定  
+```
+sudo vi /etc/yum.conf  
+proxy = http://172.16.40.1:8888 #書き換える
 
+sudo vi /etc/wgetrc
+http_proxy = http://172.16.40.1:8888 #書き換える
+https_proxy = https://172.16.40.1:8888 #書き換える
+```
 ~~IPv6が邪魔してたので停止させる  
 http://orebibou.com/2014/12/centos-7%E3%81%A7ipv6%E3%82%92%E7%84%A1%E5%8A%B9%E5%8C%96%E3%81%99%E3%82%8B/~~  
 邪魔してなかったけど、とりあえずやっておこう。
 
-rootでyumのアップデートを行い、apacheやphp、またwordpress本体をダウンロードする為にwgetもインストールする。
+yumのアップデートを行い、**apache**や**php**、また**wordpress**本体をダウンロードする為にwgetもインストールする。
 ```
-su -
-yum update
-yum install httpd php php-mysql wget
+sudo yum update
+sudo yum install httpd php php-mysql wget
 ```
 標準でmysql-serverインストール出来ないので下を参照。  
 mysql-serverのインストール: http://sawara.me/mysql/2094/  
@@ -59,7 +70,7 @@ iptables -L
 ブラウザかOSの設定でローカルアドレス（192.168.*）をプロキシ除外する。  
 ホストOSのブラウザからCentOSのIPへアクセスして、apacheの画面が表示される事を確認する。
 
-http://CentOSのIP/wordpressへアクセスする。　
+**http://CentOSのIP/wordpress**へアクセスする。　
 phpinfoは見れるがwordpressが500エラー  
 phpのエラーログを表示して、原因を探る。
 ```
@@ -67,7 +78,6 @@ sudo vi /etc/php.ini
 display_errors = ←On
 ```
 permissionなんとかって書かれてた
-
 SELINUXが邪魔してたみたい、停止させておく。
 ```
 sudo vi /etc/selinux/config
