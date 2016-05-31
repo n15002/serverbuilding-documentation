@@ -64,7 +64,8 @@ ansibleでパッケージのインストールができた
     ]
 }
 ```
-
+3-1 ansibleでWordpressを動かす(2)を行なう
+-----
 vagrantってデフォルトで鍵作るのね
 ansible用に新しく立ち上げる
 ```
@@ -200,3 +201,138 @@ PLAY RECAP *********************************************************************
 なんとか自動化はできた、コマンド叩いてから150秒くらいで終了する。  
 `http://サーバーのIP/wordpress` にアクセスすればwordpressの設定画面が出てくる。
 ![ansibleで自動化したやつ](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-31%2014-27-07.png "ansibleで自動化したやつ")
+
+3-1-2? VagrantfileからAnsibleを呼び出す
+-----
+```
+~/k/ansible-test ❯❯❯ sudo nano Vagrantfile    #追記する                                                                 ⏎
+config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "/home/n15001/ansible-wp.yml"
+    ansible.inventory_path = "/home/n15001/hosts"
+    ansible.limit = 'all'
+  end
+
+~/k/ansible-test ❯❯❯ sudo vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'CentOS7'...
+==> default: Matching MAC address for NAT networking...
+==> default: Setting the name of the VM: ansible-test_default_1464676139548_28147
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+    default: Adapter 2: hostonly
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Remote connection disconnect. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: Warning: Remote connection disconnect. Retrying...
+    default: 
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default: 
+    default: Inserting generated public key within guest...
+==> default: Machine booted and ready!
+GuestAdditions 5.0.20 running --- OK.
+==> default: Checking for guest additions in VM...
+==> default: Configuring and enabling network interfaces...
+==> default: Mounting shared folders...
+    default: /vagrant => /home/n15001/kaihatu/ansible-test
+==> default: Running provisioner: ansible...
+    default: Running ansible-playbook...
+[DEPRECATION WARNING]: Instead of sudo/sudo_user, use become/become_user and 
+make sure become_method is 'sudo' (default). This feature will be removed in a 
+future release. Deprecation warnings can be disabled by setting 
+deprecation_warnings=False in ansible.cfg.
+
+PLAY ***************************************************************************
+
+TASK [setup] *******************************************************************
+ok: [192.168.56.132]
+
+TASK [pingてすと] *****************************************************************
+ok: [192.168.56.132]
+
+TASK [file] ********************************************************************
+changed: [192.168.56.132]
+
+TASK [file] ********************************************************************
+changed: [192.168.56.132]
+
+TASK [yum.conf proxy] **********************************************************
+changed: [192.168.56.132]
+
+TASK [nginx repo] **************************************************************
+changed: [192.168.56.132]
+
+TASK [nginx install] ***********************************************************
+changed: [192.168.56.132]
+
+TASK [php install] *************************************************************
+changed: [192.168.56.132]
+
+TASK [file] ********************************************************************
+changed: [192.168.56.132]
+
+TASK [phpの設定ファイルかきかえ] **********************************************************
+changed: [192.168.56.132] => (item={u'regexp': u'user = apache', u'line': u'user = nginx'})
+changed: [192.168.56.132] => (item={u'regexp': u'group = apache', u'line': u'group = nginx'})
+
+TASK [file] ********************************************************************
+changed: [192.168.56.132]
+
+TASK [nginx設定ファイルかきかえ] *********************************************************
+changed: [192.168.56.132]
+ [WARNING]: Consider using template or lineinfile module rather than running
+sed
+
+TASK [file] ********************************************************************
+changed: [192.168.56.132]
+
+TASK [file] ********************************************************************
+changed: [192.168.56.132]
+
+TASK [command] *****************************************************************
+changed: [192.168.56.132]
+
+TASK [WordPress ダウンロード] ********************************************************
+changed: [192.168.56.132]
+ [WARNING]: Consider using get_url module rather than running wget
+
+TASK [wordpress 解凍] ************************************************************
+changed: [192.168.56.132]
+
+TASK [file] ********************************************************************
+ [WARNING]: Consider using unarchive module rather than running tar
+
+changed: [192.168.56.132]
+
+TASK [MariaDB を常時起動にする (サービスを有効化)] *********************************************
+changed: [192.168.56.132]
+
+TASK [nginxを常時起動にする (サービスを有効化)] ************************************************
+changed: [192.168.56.132]
+
+TASK [php-fpm を常時起動にする (サービスを有効化)] *********************************************
+changed: [192.168.56.132]
+
+TASK [wordpress用のデータベース作成] *****************************************************
+changed: [192.168.56.132]
+
+TASK [データベース弄れるユーザ作成] **********************************************************
+changed: [192.168.56.132]
+
+TASK [wp-config-sampleをコピー] ****************************************************
+changed: [192.168.56.132]
+
+TASK [wp-configの書き換え] **********************************************************
+changed: [192.168.56.132]
+
+PLAY RECAP *********************************************************************
+192.168.56.132             : ok=25   changed=23   unreachable=0    failed=0   
+```
