@@ -1,17 +1,19 @@
-Ansibleによる自動化とテスト
+Section 3 Ansibleによる自動化とテスト
+======
+https://github.com/cloneko/serverbuilding/blob/master/Section3.md
 
-sudo apt install ansible
-
-
+3-0 Ansibleのインストール
+-----
 ```
-~ ❯❯❯ ansible --version                                                                                                              ⏎
+~ ❯❯❯ sudo apt install ansible
+~ ❯❯❯ ansible --version                                                                                           ⏎
 ansible 2.0.0.2
   config file = /etc/ansible/ansible.cfg
   configured module search path = Default w/o overrides
 ```
-まずはテスト  
+##Ansibleのテスト  
 カレントディレクトリにhostsファイルを作って、接続先にsection2で作ったサーバのIPを書く。  
-echo 192.168.56.130 > hosts
+`echo 192.168.56.130 > hosts`
 ```
 ~ ❯❯❯ ansible -i hosts 192.168.56.130 -m ping
 192.168.56.130 | UNREACHABLE! => {
@@ -22,14 +24,14 @@ echo 192.168.56.130 > hosts
 ```
 鍵認証にするみたい  
 http://qiita.com/HamaTech/items/21bb9761f326c4d4aa65
-
+```
 ~ ❯❯❯ sssh-keygen -t rsa  
 ~ ❯❯❯ scat ~/.ssh/id_rsa.pub | ssh vagrant@192.168.56.130 'cat >> .ssh/authorized_keys'  
 ~ ❯❯❯ sssh vagrant@192.168.56.130  
 [vagrant@localhost ~]$ sudo vi /etc/ssh/sshd_config  
 PasswordAuthentication yes を noに変更  
 [vagrant@localhost ~]$ systemctl restart sshd
-```
+
 ~ ❯❯❯ ansible -i hosts 192.168.56.130 -m ping -u vagrant --private-key="~/.ssh/id_rsa"
 192.168.56.130 | SUCCESS => {
     "changed": false, 
@@ -38,7 +40,7 @@ PasswordAuthentication yes を noに変更
 ```
 いちいちオプション付けるの面倒なので、指定しておく。
 ```
-~ ❯❯❯ sudo vi ~/.ssh/config
+~ ❯❯❯ sudo vi ~/.ssh/config #追記する
 Host 192.168.56.*
   User vagrant
   IdentityFile /home/n15001/.ssh/id_rsa
@@ -50,7 +52,6 @@ Host 192.168.56.*
     "ping": "pong"
 }
 ```
-
 ansibleでパッケージのインストールができた
 ```
 ~ ❯❯❯ ansible -i hosts 192.168.56.130 -m yum -s -a name=telnet 
@@ -64,15 +65,15 @@ ansibleでパッケージのインストールができた
 }
 ```
 
-vagrantってデフォルトでかぎつくるのね
+vagrantってデフォルトで鍵作るのね
 ansible用に新しく立ち上げる
 ```
 ~/k/ansible-server ❯❯❯ vagrant init
 ~/k/ansible-server ❯❯❯ vagrant up
 ~/k/ansible-server ❯❯❯ vagrant ssh
 [vagrant@localhost ~]$ sudo chmod 600 ~/.ssh/authorized_keys
-~/k/ansible-server ❯❯❯ vsecho 192.168.56.131 >> ~/hosts
-~/k/ansible-server ❯❯❯ v/sudo etc/ansible/ansible.cfg
+~/k/ansible-server ❯❯❯ echo 192.168.56.131 >> ~/hosts
+~/k/ansible-server ❯❯❯ sudo etc/ansible/ansible.cfg
 [defaults]
 hostfile = /home/n15001/hosts
 remote_user = vagrant
@@ -99,6 +100,7 @@ TASK [pingしてみる] ********************************************************
 ok: [192.168.56.131]
 PLAY RECAP *********************************************************************
 ```
-https://github.com/n15001/serverbuilding-documentation/blob/master/ansible-wp.yml
+
+**Playbook**：https://github.com/n15001/serverbuilding-documentation/blob/master/ansible-wp.yml
 
 インストール済みかどうかで条件分岐や、nginx設定ファイルの書き換えをどうしようか

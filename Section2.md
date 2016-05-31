@@ -1,6 +1,8 @@
-Section 2 その他のWebサーバー環境  
-------
-###2-1 Vagrantを使用したCentOS 7環境の起動
+Section 2 その他のWebサーバー環境
+=====
+https://github.com/cloneko/serverbuilding/blob/master/Section2.md
+2-1 Vagrantを使用したCentOS 7環境の起動
+-----
 ここに書いてある通りにやりましょう。https://github.com/cloneko/serverbuilding/blob/master/Section2.md
 ```
 ~/hoge ❯❯❯  vagrant up                                                                                               ⏎
@@ -38,19 +40,23 @@ vagrant@127.0.0.1's password:
 Last login: Wed May 11 10:18:14 2016
 [vagrant@localhost ~]$
 ```
-2回目起動したときにStderr: VBoxManage: error: Implementation of the USB 2.0 controller not found!~ なエラーが出た。  
+2回目起動したときに*Stderr: VBoxManage: error: Implementation of the USB 2.0 controller not found!~*なエラーが出た。  
 解決するために拡張機能をここからダウンロードして追加する  
 https://www.virtualbox.org/wiki/Downloads  
 
-###2-2 Wordpressを動かす(2)
-http://www.server-memo.net/memo/wordpress/nginx-install.html  
+2-2 Wordpressを動かす(2)
+-----
+
+ここを参考にする：http://www.server-memo.net/memo/wordpress/nginx-install.html  
 
 プロキシの設定
 ```
 sudo vi /etc/yum.conf  
-proxy = http://172.16.40.1:8888
+proxy = http://172.16.40.1:8888 #書き換える
+
 sudo vi /etc/wgetrc
-http_proxy = 172.16.40.1:8888
+http_proxy = http://172.16.40.1:8888 #書き換える
+https_proxy = https://172.16.40.1:8888 #書き換える
 ```
 システムの自動起動と再起動
 ```
@@ -111,27 +117,27 @@ Percentage of the requests served within a certain time (ms)
   99%  93163
  100%  93163 (longest request)
 ```
-2日目にvagrant up したらエラーはいた  
+
+2日目に`vagrant up`したらエラーはいた  
 ```
 Failed to mount folders in Linux guest. This is usually because
 the "vboxsf" file system is not available. Please verify that
 the guest additions are properly installed in the guest and
-can work properly. The command attempted was:
+can work properly. The command attempted was
 
 mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` vagrant /vagrant
 mount -t vboxsf -o uid=`id -u vagrant`,gid=`id -g vagrant` vagrant /vagrant
 
 The error output from the last command was:
-
 /sbin/mount.vboxsf: mounting failed with the error: No such devic
 ```
-共有フォルダ作ってたみたいなのでそれが原因、vagrant用プラグインvagrant-vbguestを入れる。
+ゲスト作ってたみたいなのでそれが原因、vagrant用プラグインvagrant-vbguestを入れる。  
 http://qiita.com/akippiko/items/278efedee35661634b85
 ```
 ~/kaihatu ❯❯❯ vagrant plugin install vagrant-vbguest
 Installing the 'vagrant-vbguest' plugin. This can take a few minutes...
 Installed the plugin 'vagrant-vbguest (0.11.0)'!
-~/kaihatu ❯❯❯ vagrant up                                                                                                             ⏎
+~/kaihatu ❯❯❯ vagrant up                                                                                        ⏎
 Bringing machine 'default' up with 'virtualbox' provider...
 ==> default: Clearing any previously set forwarded ports...
 ==> default: Clearing any previously set network interfaces...
@@ -185,28 +191,27 @@ Could not find the X.Org or XFree86 Window System, skipping.
 ~/kaihatu ❯❯❯  vagrant vbguest --status
 GuestAdditions 5.0.20 running --- OK.
 ```
-
+##PageSpeed
 [PageSpeed Insights (with PNaCl)](https://chrome.google.com/webstore/detail/pagespeed-insights-with-p/lanlbpjbalfkflkhegagflkgcfklnbnh?hl=ja)
 
-僕の環境chromiumじゃ動かなかった、純chromeじゃないとダメらしい。
-*点数：78/100* 
+僕の環境のchromiumじゃ動かなかった、純chromeじゃないとダメらしい。
+**点数：78/100**
 jqueryなんかを圧縮してサイズ減らせって書いてあった  
 
-### 2-3 Wordpressを動かす(3)
-PHP7.0.2のインストール
-------
+2-3 Wordpressを動かす(3)
+-----
+###PHP7.0.2のインストール
 公式サイト：http://php.net/manual/ja/migration70.php
 ```
 sudo vi ~/.gitconfig
 [http]  
-    proxy = http://学校のプロキシ:ぽーと
+    proxy = http://学校のプロキシ:ポート #書き換える
 [https] 
-    proxy = https://学校のプロキシ:ポート
+    proxy = https://学校のプロキシ:ポート #書き換える
 
-git clone -b PHP-7.0.2 https://github.com/php/php-src.git
-yum install autoconf
+[vagrant@localhost]$ git clone -b PHP-7.0.2 https://github.com/php/php-src.git
+[vagrant@localhost]$ yum install autoconf
 [vagrant@localhost php-src]$ ./buildconf --force
-[vagrant@localhost php-src]$ ./configure --help 
 [vagrant@localhost php-src]$ ./configure --with-zlib-dir --with-freetype-dir --enable-mbstring --with-libxml-dir=--enable-soap --enable-calendar --with-curl --with-mcrypt --with-zlib --with-gd --disable-rpath --enable-inline-optimization --with-bz2 --with-zlib --enable-sockets --enable-sysvsem --enable-sysvshm --enable-pcntl --enable-mbregex --enable-exif --enable-bcmath --with-mhash --enable-zip --with-pcre-regex --with-pdo-mysql --with-mysqli --with-mysql-sock=/var/run/mysqld/mysqld.sock --with-jpeg-dir=/usr --with-png-dir=/usr --enable-gd-native-ttf --with-openssl --with-fpm-user=USER --with-fpm-group=USER --with-libdir --enable-ftp --with-kerberos --with-gettext --with-xmlrpc --with-xsl --enable-opcache --enable-fpm
 checking for grep that handles long lines and -e... /usr/bin/grep
 checking for egrep... /usr/bin/grep -E
@@ -256,24 +261,21 @@ checking for re2c... no
 configure: WARNING: You will need re2c 0.13.4 or later if you want to regenerate PHP parsers.
 configure: error: bison is required to build PHP/Zend when building a GIT checkout!
 
-wget http://downloads.sourceforge.net/project/re2c/0.16/re2c-0.16.tar.gz
-tar zxvf re2c-0.16.tar.gz
-cd re2c-0.16
-./configure
+[vagrant@localhost php-src]$ wget http://downloads.sourceforge.net/project/re2c/0.16/re2c-0.16.tar.gz
+[vagrant@localhost php-src]$ sudo tar zxvf re2c-0.16.tar.gz
+[vagrant@localhost php-src]$ cd re2c-0.16
+[vagrant@localhost php-src]$ ./configure
 G++が見つかりません
-yum install gcc-c++
-make
-
-sudo yum install bison
-
+[vagrant@localhost php-src]$ sudo yum install gcc-c++
+[vagrant@localhost php-src]$ make
+bisonが無いと怒られる
+[vagrant@localhost php-src]$ sudo yum install bison
 再びconfigureでエラー：configure: error: mcrypt.h not found. Please reinstall libmcrypt.
-
-sudo yum install epel-release
-sudo vi /etc/yum.repos.d/epel.repo →enabled=1を0に変更して明示的にー
-sudo yum --enablerepo=epel install libmcrypt-devel
-
-make
-permission errorが出たのでsudo付けてmake install
+[vagrant@localhost php-src]$ sudo yum install epel-release
+[vagrant@localhost php-src]$ sudo vi /etc/yum.repos.d/epel.repo
+enabled=1 を 0 に変更してリポジトリを明示的に指定するようにする。
+[vagrant@localhost php-src]$ sudo yum --enablerepo=epel install libmcrypt-devel
+[vagrant@localhost php-src]$ make
 [vagrant@localhost php-src]$ sudo make install
 Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20151012/
 Installing PHP CLI binary:        /usr/local/bin/
@@ -302,7 +304,6 @@ Proxy による接続要求を送信しました、応答を待っています..
 `pear/install-pear-nozlib.phar' に保存中
 
 100%[=============================================================================================>] 3,579,275    720KB/s 時間 5.1s   
-
 2016-05-19 16:49:58 (681 KB/s) - `pear/install-pear-nozlib.phar' へ保存完了 [3579275/3579275]
 
 [PEAR] Archive_Tar    - installed: 1.4.0
@@ -322,14 +323,15 @@ Zend Engine v3.0.0, Copyright (c) 1998-2015 Zend Technologies
 ```
 apache2.2のインストール
 ------
-wget http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.gz  
-tar zxvf httpd-2.2.31.tar.gz  
-cd httpd-2.2.31  
-./configure  
-make  
-sudo make install  
-
-prefixつけたほうがいいのかも
+```
+[vagrant@localhost]$ wget http://ftp.kddilabs.jp/infosystems/apache//httpd/httpd-2.2.31.tar.gz  
+[vagrant@localhost]$ tar zxvf httpd-2.2.31.tar.gz  
+[vagrant@localhost]$ cd httpd-2.2.31  
+[vagrant@localhost]$ ./configure  
+[vagrant@localhost]$ make  
+[vagrant@localhost]$ sudo make install  
+```
+インストールされているか確認する。
 ```
 [vagrant@localhost httpd-2.2.31]$ sudo /usr/local/apache2/bin/apachectl -v
 Server version: Apache/2.2.31 (Unix)
@@ -345,7 +347,7 @@ daemon   12223  0.0  0.1  27768  1144 ?        S    17:49   0:00 /usr/local/apac
 ```
 ![apache2.2いんすこ画像](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-19%2018-11-24.png "apache2.2いんすこ画像")
 
-modrewite入ってなかった
+modrewiteモジュールが入ってなかったのでソースから引っ張る
 ```
 [vagrant@localhost ~]$ sudo /usr/local/apache2/bin/apxs -i -a -c ~/httpd-2.2.31/modules/mappers/mod_rewrite.c
 /usr/local/apache2/build/libtool --silent --mode=compile gcc -prefer-pic   -DLINUX -D_REENTRANT -D_GNU_SOURCE -g -O2 -pthread -I/usr/local/apache2/include  -I/usr/local/apache2/include   -I/usr/local/apache2/include   -c -o /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.lo /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.c && touch /home/vagrant/httpd-2.2.31/modules/mappers/mod_rewrite.slo
@@ -384,6 +386,7 @@ httpd.exp       mod_rewrite.so
 libphp7.soが入ってなかったのでコピペで再ビルド  
 http://qiita.com/ssaita/items/9e0170251d45ed1b8818
 
+```
 configure: error: xpm.h not found.  
 yum install libXpm-devel.x86_64  
 configure: error: Unable to locate gmp.h  
@@ -397,7 +400,7 @@ configure: error: Please reinstall the mysql distribution
 [vagrant@localhost php-src]$ which mysql_config  
 /usr/bin/mysql_config  
 configure: error: Cannot find pspell
-
+```
 ```
 [vagrant@localhost php-src]$ sudo make install
 Installing PHP SAPI module:       apache2handler
@@ -441,6 +444,7 @@ Zend Engine v3.0.0, Copyright (c) 1998-2015 Zend Technologies
 
 [vagrant@localhost php-src]$ ls /usr/local/apache2/modules/
 httpd.exp       libphp7.so      mod_rewrite.so  
+```
 
 ```
 sudo vi /usr/local/apache2/conf/httpd.conf  
@@ -449,14 +453,15 @@ DocumentRoot "/usr/local/apache2/htdocs/wordpress/"と書き足す
 AddType application/x-httpd-php .phpと  
 DirectoryIndex にindex.phpを追加する  
 sudo /usr/local/apache2/bin/httpd -k restart  
+```
 
-wordpressをwgetしてデータベース作ってconfig書いて自分のIPにアクセスしてはいちゅんちゅん(・8・)  
+wordpressをwgetしてデータベース作ってwp-configを適宜変更してサーバーのIPにアクセスする。 
 
 ![wordpressがめん](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-19%2020-53-17.png "wordpressがめん")
 
-abtest、100リクエスト全部捌けてるっぽい。
+##2-3のサーバでApachebench結果
 ```
-~ ❯❯❯ sudo ab -n 100 -c 100 http://192.168.56.130/                                                                                   ⏎
+~ ❯❯❯ sudo ab -n 100 -c 100 http://192.168.56.130/                                                              ⏎
 [sudo] password for n15001: 
 This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
@@ -500,10 +505,13 @@ Percentage of the requests served within a certain time (ms)
   99%  102096
  100%  102096 (longest request)
 ```
-PageSpeed Insightsは78/100点
-セクション2.2のサーバと同じような事が書いてた
+##PageSpeed
+**78/100点**
+セクション2-2のサーバと同じような事が書いてた
 
-とりあえずセキュリティチェック
+
+セキュリティチェック
+-----
 ノパソ本体（ubuntu16.04）にOpenVasのインストール
 https://launchpad.net/~mrazavi/+archive/ubuntu/openvas
 ```
@@ -527,13 +535,14 @@ openvas9-cli - remote network security auditor - cli
 openvas9-gsa - remote network security auditor - web interface
 sudo apt install openvas -y
 ```
+```
 sudo service openvas-scanner status
 sudo service openvas-manager status
 https://localhostにアクセスする
 ユーザ名:admin password:admin
 オレオレ警告が出るけど”このURLにアクセスする”を選択
-
-nmap
+```
+##ポートスキャンツールnmap
 ```
 ~/k/openvas ❯❯❯ sudo nmap -A 192.168.56.130
 Starting Nmap 7.01 ( https://nmap.org ) at 2016-05-20 09:50 JST
@@ -560,7 +569,6 @@ Network Distance: 1 hop
 TRACEROUTE
 HOP RTT     ADDRESS
 1   2.74 ms 192.168.56.130
-
 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
 Nmap done: 1 IP address (1 host up) scanned in 27.02 seconds
 ```
@@ -594,13 +602,10 @@ do_wget () {
 ナンダコノ関数
 参照先のOV_HTTP_FEED=http://www.openvas.org/openvas-scap-data-current.tar.bz2もリンク切れだし意味わかめ
 
-nvtだけでもスキャンできるっぽい。
-
 ~/k/openvas ❯❯❯ ps 14820
   PID TTY      STAT   TIME COMMAND
 14820 ?        Rs     1:48 openvassd: Reloaded 32400 of 47056 NVTs (68% / ETA: 00:54)
-ロードもスキャンもかなり長い
-
-スキャン開始２０分くらいで落ちた
-
+再起動する度に長いロードが入る。
+スキャン開始２０分くらいでパソコン本体が落ちる。
 ```
+結局、モバイル回線を使って全てのファイルをダウンロードして、1時間以上掛けてスキャンしてみたけど結果が出なかった。
