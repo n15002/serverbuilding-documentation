@@ -1,5 +1,5 @@
 ---
-- hosts: 192.168.56.131
+- hosts: 192.168.56.132
   sudo: yes
   remote_user: vagrant
   vars:
@@ -11,16 +11,16 @@
      ping:
    - file: path=/home/vagrant/.ssh/authorized_keys state=touch mode="u=rw,g=,o="
    - file: path=/etc/yum.conf state=touch mode="u=rw,g=rw,o=rw"
-  # - name: yum.conf proxy
-  #   lineinfile: >
-  #     dest=/etc/yum.conf
-  #     line='proxy=http://172.16.40.1:8888'
-  # - name: nginx repo
-  #   yum: name=http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm state=present
-  # - name: nginx install
-  #   yum: name=nginx state=latest
-  # - name: php install
-  #   yum: name=php,php-mbstring,php-pear,php-fpm,php-mysql,mariadb,mariadb-server,MySQL-python state=latest
+   - name: yum.conf proxy
+     lineinfile: >
+       dest=/etc/yum.conf
+       line='proxy=http://172.16.40.1:8888'
+   - name: nginx repo
+     yum: name=http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm state=present
+   - name: nginx install
+     yum: name=nginx state=latest
+   - name: php install
+     yum: name=php,php-mbstring,php-pear,php-fpm,php-mysql,mariadb,mariadb-server,MySQL-python state=latest
    - file: path=/etc/php-fpm.d/www.conf state=touch mode="u=rw,g=rw,o=rw"
    - name: "phpの設定ファイルかきかえ"
      lineinfile: >-
@@ -40,12 +40,13 @@
    - file: path=/etc/wgetrc state=touch mode="u=rw,g=rw,o=rw"
    - file: path=/usr/share/nginx/html state=touch mode="u=rw,g=rw,o=rwx"
    - shell: sed -i "s/#https_proxy = http:\/\/proxy.yoyodyne.com:18023\//https_proxy = http:\/\/172.16.40.1:8888\//g; s/#http_proxy = http:\/\/proxy.yoyodyne.com:18023\//http_proxy = http:\/\/172.16.40.1:8888\//g" /etc/wgetrc 
-#   - name: WordPress ダウンロード
-#     get_url: url="https://ja.wordpress.org/wordpress-4.5.2-ja.tar.gz" dest=/tmp
+   - name: WordPress ダウンロード
+     shell: wget https://ja.wordpress.org/wordpress-4.5.2-ja.tar.gz -P /tmp
+#    get_url: url="https://ja.wordpress.org/wordpress-4.5.2-ja.tar.gz" dest=/tmp
 #    checksum=sha256: 3c4bb522e3b32a080f7a10884381e43f2450bc3d166d1dfe3a93c600b33e4f3e
-#   - name: wordpress 解凍
-#     command: tar zxvf /tmp/wordpress-4.5.2-ja.tar.gz chdir=/usr/share/nginx/html/
-   - file: path=/usr/share/nginx/html/wordpress owner=nginx group=nginx mode=0755
+   - name: wordpress 解凍
+     command: tar zxvf /tmp/wordpress-4.5.2-ja.tar.gz chdir=/usr/share/nginx/html/
+   - file: path=/usr/share/nginx/html/wordpress/ owner=nginx group=nginx mode=0755
    - name: MariaDB を常時起動にする (サービスを有効化)
      service:
        name: mariadb
@@ -65,7 +66,26 @@
      mysql_db: db=wordpress state=present encoding=utf8
    - name:  wordpress database user is created
      mysql_user: name=n15001 password=password priv=wordpress.*:ALL state=present host=localhost
+   - name: "wp-config-sampleをコピー"
+#    copy: src=/usr/share/nginx/html/wordpress/wp-config-sample.php dest=/usr/share/nginx/html/wordpress/wp-config.php owner=nginx group=nginx mode=0644
+     shell: mv /usr/share/nginx/html/wordpress/wp-config-sample.php /usr/share/nginx/html/wordpress/wp-config.php
+   - name: "wp-configの書き換え"
+     shell: sed -i 's/database_name_here/wordpress/g; s/username_here/n15001/g; s/password_here/password/g;' /usr/share/nginx/html/wordpress/wp-config.php
 
+
+#     lineinfile: >-
+#       dest='/usr/share/nginx/html/wordpress/wp-config.php'
+#       state=present
+#       backrefs=yes
+#       regexp='{{ item.regexp }}'
+#       line='{{ item.line }}'
+#     with_items:
+#     - regexp: 'database_name_here'
+#       line: "define('DB_NAME', 'wordpress');"
+#     - regexp: 'username_here'
+#       line: "define('DB_NAME', 'n15001');"
+#     - regexp: 'password_here'
+#       line: "define('DB_PASSWORD', 'password');"
 
 #   - name: root アカウントのパスワードを設定
 #     mysql_user:
