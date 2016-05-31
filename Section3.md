@@ -105,7 +105,6 @@ PLAY RECAP *********************************************************************
 
 インストール済みかどうかで条件分岐や、nginx設定ファイルの書き換えをどうしようか
 
-なんとか自動化はできた
 ```
 ~ ❯❯❯ sudo ansible-playbook ansible-wp.yml --ask-sudo-pass
 SUDO password: 
@@ -197,5 +196,7 @@ changed: [192.168.56.132]
 
 PLAY RECAP *********************************************************************
 192.168.56.132             : ok=25   changed=23   unreachable=0    failed=0   
-
 ```
+なんとか自動化はできた、コマンド叩いてから150秒くらいで終了する。  
+`http://サーバーのIP/wordpress` にアクセスすればwordpressの設定画面が出てくる。
+![ansibleで自動化したやつ](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-05-31%2014-27-07.png "ansibleで自動化したやつ")
