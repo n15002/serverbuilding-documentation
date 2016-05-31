@@ -62,9 +62,9 @@
        name: php-fpm
        state: started
        enabled: yes
-   - name: database for wordpress is created
+   - name: "wordpress用のデータベース作成"
      mysql_db: db=wordpress state=present encoding=utf8
-   - name:  wordpress database user is created
+   - name:  "データベース弄れるユーザ作成"
      mysql_user: name=n15001 password=password priv=wordpress.*:ALL state=present host=localhost
    - name: "wp-config-sampleをコピー"
 #    copy: src=/usr/share/nginx/html/wordpress/wp-config-sample.php dest=/usr/share/nginx/html/wordpress/wp-config.php owner=nginx group=nginx mode=0644
