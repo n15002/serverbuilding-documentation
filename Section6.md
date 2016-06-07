@@ -50,3 +50,11 @@ Last login: Thu Jun  2 02:27:09 2016 from ******
 [ec2-user@ip-172-31-12-66 ~]$ 
 ```
 
+```
+[n15001@grus ~/ansible]$ ansible 54.238.210.10 -m ping -i hosts -u ec2-user --private-key ~/n15001.pem 
+54.238.210.10 | SUCCESS => {
+    "changed": false, 
+    "ping": "pong"
+}
+```
+
