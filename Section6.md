@@ -79,6 +79,69 @@ upload: ./index.html to s3://n15001/index.html
 2016-06-08 09:43:17        109 index.html
 ```
 `http://バケット名.s3-ap-northeast-1.amazonaws.com/ファイル名`でアクセスしてWebページが表示されれば成功
+http://n15001.s3-ap-northeast-1.amazonaws.com/index.html
+
+6-4 Cloudfront
+-----
+apachbenchを使って、cloudfrontでキャッシュさせる前とした後のWebサイト測定
+AWSのサービスからCloudfrontを選択
+Origin Domain Nameはドメインじゃないとダメみたい
+
+```
+[n15001@grus ~]$ ab -n 100 -c 100 http://ec2-54-199-207-38.ap-northeast-1.compute.amazonaws.com/wordpress/
+This is ApacheBench, Version 2.3 <$Revision: 1706008 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking ec2-54-199-207-38.ap-northeast-1.compute.amazonaws.com (be patient).....done
+
+
+Server Software:        nginx/1.8.1
+Server Hostname:        ec2-54-199-207-38.ap-northeast-1.compute.amazonaws.com
+Server Port:            80
+
+Document Path:          /wordpress/
+Document Length:        65284 bytes
+
+Concurrency Level:      100
+Time taken for tests:   35.463 seconds
+Complete requests:      100
+Failed requests:        75
+   (Connect: 0, Receive: 0, Length: 75, Exceptions: 0)
+Non-2xx responses:      64
+Total transferred:      2350489 bytes
+HTML transferred:       2323089 bytes
+Requests per second:    2.82 [#/sec] (mean)
+Time per request:       35462.665 [ms] (mean)
+Time per request:       354.627 [ms] (mean, across all concurrent requests)
+Transfer rate:          64.73 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       37   82  12.5     86      88
+Processing:  1223 12585 6777.0  12838   35374
+Waiting:     1032 11386 5258.2  12724   20363
+Total:       1305 12667 6776.9  12925   35459
+
+Percentage of the requests served within a certain time (ms)
+  50%  12925
+  66%  14976
+  75%  15113
+  80%  15297
+  90%  18938
+  95%  20450
+  98%  35459
+  99%  35459
+ 100%  35459 (longest request)
+
+```
 
 
 
+Edit Geo-Restrictions
+Enable Geo-Restriction →Yes
+Restriction Type → WhiteList
+JPを追加する
+
+USインスタンスを立ち上げてWebサイトにアクセスしてみる
+![Cloudfrontの地域のアレ](https://raw.githubusercontent.com/n15001/serverbuilding-documentation/master/Screenshot%20from%202016-06-08%2018-24-42.png 'are')
