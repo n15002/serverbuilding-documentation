@@ -58,3 +58,27 @@ Last login: Thu Jun  2 02:27:09 2016 from ******
 }
 ```
 
+6-3 S3
+-----
+```
+[n15001@grus ~]$ aws configure
+AWS Access Key ID [None]: ******************
+AWS Secret Access Key [None]: **********************************
+Default region name [None]: ap-northeast-1 #tokyo
+Default output format [None]: json
+
+[n15001@grus ~]$ aws ec2 describe-instances #色々情報見れるの確認する
+[n15001@grus ~]$ aws s3 ls #s3バッケト一覧
+[n15001@grus ~]$ aws s3 mb s3://n15001 #バケット作成 MakeBacket?
+make_bucket: s3://n15001/
+[n15001@grus ~]$ aws s3 ls #自分のバケットが作成されているか確認する
+[n15001@grus ~]$ sudo vi index.html #公開用のHTML作成
+[n15001@grus ~]$ aws s3 cp --acl public-read index.html s3://n15001/ #外部からの閲覧権限を与えながらアップロード
+upload: ./index.html to s3://n15001/index.html
+[n15001@grus ~]$ aws s3 ls s3://n15001
+2016-06-08 09:43:17        109 index.html
+```
+`http://バケット名.s3-ap-northeast-1.amazonaws.com/ファイル名`でアクセスしてWebページが表示されれば成功
+
+
+
