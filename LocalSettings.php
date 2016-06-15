@@ -18,8 +18,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
 
-$wgSitename = "n15001no";
-$wgMetaNamespace = "N15001no";
+$wgSitename = "n15001のWiki";
+$wgMetaNamespace = "N15001";
 
 ## The URL base path to the directory containing the wiki;
 ## defaults for all runtime URL paths are based off of this.
@@ -55,8 +55,8 @@ $wgEmailAuthentication = true;
 $wgDBtype = "mysql";
 $wgDBserver = "localhost";
 $wgDBname = "my_wiki";
-$wgDBuser = "root";
-$wgDBpassword = "";
+$wgDBuser = "n15001";
+$wgDBpassword = "password";
 
 # MySQL specific settings
 $wgDBprefix = "";
