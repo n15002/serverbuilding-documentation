@@ -51,7 +51,7 @@ chown -R apache:apache /var/www/html/wordpress/*
 rootユーザにパスワードを設定し、wordpress用のユーザを制作、権限を与えてパスワードを設定する。
 ```
 mysql> SELECT host,user FROM mysql.user;
-mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');
+mysql> SET PASSWORD FOR root@"localhost"=PASSWORD('********');  # ↓のコマンドでも変更できるので不要
 mysql> GRANT SELECT, INSERT, UPDATE, DELETE, CREATE ON *.* TO　n15001@"localhost" IDENTIFIED BY "********";
 ```
 
